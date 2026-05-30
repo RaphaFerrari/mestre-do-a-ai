@@ -2,7 +2,7 @@
 <html lang="pt-PT" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mestre do Açaí Delivery | Cardápio Digital</title>
     <meta name="description" content="O melhor açaí da região. Eleito Super Restaurante com mais de 100 mil açaís vendidos. Peça agora!">
     
@@ -34,14 +34,20 @@
         }
     </script>
 
+    <!-- SweetAlert2 (Para Alertas Modernos) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Canvas Confetti (Para Micro-interações) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
-        body { background-color: #f2eff0; color: #63336f; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: #f2eff0; color: #63336f; font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
         h1, h2, h3, h4, h5, h6, .font-poppins { font-family: 'Poppins', sans-serif; }
         
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #f2eff0; }
-        ::-webkit-scrollbar-thumb { background: #8b7193; border-radius: 4px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #8b7193; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #63336f; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -50,29 +56,23 @@
         .category-scroll {
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
+            scroll-padding-inline-start: 1rem; /* Margem magnética ao fazer scroll */
         }
 
-        /* Animações */
-        @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(20px) translateX(-50%); }
-            to { opacity: 1; transform: translateY(0) translateX(-50%); }
-        }
-        .toast-enter { animation: slideUpFade 0.4s ease forwards; }
+        /* Animações e customização do SweetAlert */
         @keyframes shimmer { 100% { transform: translateX(400%); } }
+        .swal2-container { z-index: 9999 !important; }
     </style>
 </head>
-<body class="antialiased selection:bg-brandGreen selection:text-white pb-24 md:pb-0">
-
-    <!-- TOAST NOTIFICATION (Mensagens) -->
-    <div id="toast-container" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-[110] flex flex-col gap-2 pointer-events-none"></div>
+<body class="antialiased selection:bg-brandGreen selection:text-white pb-28 md:pb-0">
 
     <!-- CABEÇALHO -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-brandBg/90 backdrop-blur-md border-b border-brandSec1/20 transition-all duration-300" id="navbar">
+    <header class="fixed top-0 left-0 w-full z-50 bg-brandBg/95 backdrop-blur-md border-b border-brandSec1/20 transition-all duration-300 shadow-sm" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
+            <div class="flex justify-between items-center h-20 md:h-24">
                 <!-- Logótipo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer py-2" onclick="window.scrollTo(0,0)">
-                    <img src="logo.png" alt="Mestre do Açaí Logo" class="h-20 md:h-24 w-auto object-contain" onerror="this.src='https://placehold.co/180x80/63336f/f2eff0?text=Mestre+do+Acai'">
+                    <img src="logo.png" alt="Mestre do Açaí Logo" class="h-16 md:h-24 w-auto object-contain" onerror="this.src='https://placehold.co/180x80/63336f/f2eff0?text=Mestre+do+Acai'">
                 </div>
 
                 <!-- Links Desktop -->
@@ -85,39 +85,39 @@
                     </a>
                 </nav>
 
-                <!-- Ícones -->
+                <!-- Ícones de Ação (Com áreas de toque otimizadas min 44px para mobile UX) -->
                 <div class="flex items-center space-x-2 sm:space-x-3">
                     <!-- Botão Buscar -->
-                    <button onclick="focusSearch()" class="h-10 w-10 sm:h-12 sm:w-12 bg-[#ebdff0] hover:bg-[#dfcce6] rounded-full flex items-center justify-center text-[#9a4dcf] font-bold transition-all" aria-label="Buscar">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <button onclick="focusSearch()" class="h-11 w-11 sm:h-12 sm:w-12 bg-[#ebdff0] hover:bg-[#dfcce6] rounded-full flex items-center justify-center text-[#9a4dcf] transition-all" aria-label="Buscar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </button>
                     
                     <!-- Botão Compartilhar -->
-                    <button onclick="compartilharLoja()" class="h-10 w-10 sm:h-12 sm:w-12 bg-[#ebdff0] hover:bg-[#dfcce6] rounded-full flex items-center justify-center text-[#9a4dcf] transition-all border-[2.5px] border-brandDark shadow-sm" aria-label="Compartilhar">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <button onclick="compartilharLoja()" class="h-11 w-11 sm:h-12 sm:w-12 bg-[#ebdff0] hover:bg-[#dfcce6] rounded-full flex items-center justify-center text-[#9a4dcf] transition-all" aria-label="Compartilhar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                         </svg>
                     </button>
 
                     <!-- Botão Carrinho -->
-                    <button id="cart-toggle" class="relative ml-1 p-2 text-brandDark hover:text-brandGreen transition-colors bg-white rounded-full shadow-md border border-brandSec1/10 flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12" aria-label="Abrir carrinho">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button id="cart-toggle" class="relative ml-1 bg-white text-brandDark hover:text-brandGreen hover:bg-gray-50 transition-all rounded-full shadow-sm border border-brandSec1/10 flex items-center justify-center h-11 w-11 sm:h-12 sm:w-12" aria-label="Abrir carrinho">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
-                        <span id="cart-count" class="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-brandGreen rounded-full border-2 border-brandBg">0</span>
+                        <span id="cart-count" class="absolute -top-1 -right-1 flex items-center justify-center w-[22px] h-[22px] text-[11px] font-bold text-white bg-brandGreen rounded-full border-2 border-brandBg">0</span>
                     </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION (Centralizada e sem bloco vazio) -->
-    <section id="inicio" class="pt-32 pb-12 lg:pt-40 lg:pb-20 overflow-hidden relative">
+    <!-- HERO SECTION -->
+    <section id="inicio" class="pt-28 pb-10 lg:pt-36 lg:pb-16 overflow-hidden relative">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             
-            <div class="hero-anim inline-flex flex-wrap justify-center gap-2 mb-6 mt-6">
+            <div class="hero-anim inline-flex flex-wrap justify-center gap-2 mb-6 mt-4">
                 <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm">
                     ⭐ Eleito Super Restaurante
                 </span>
@@ -132,42 +132,37 @@
             
             <ul class="hero-anim text-sm sm:text-base text-brandSec1 mb-8 space-y-2 font-medium flex flex-col items-center justify-center">
                 <li class="flex items-center gap-2"><span class="text-xl">⏰</span> 14:00 às 22:00 (Dom a Sex)</li>
-                <li class="flex items-center gap-2"><span class="text-xl">🏡</span> Barreiro | Vista Alegre | Califórnia</li>
+                <li class="flex items-center gap-2 text-center"><span class="text-xl">🏡</span> Barreiro | Vista Alegre | Califórnia</li>
                 <li class="flex items-center gap-2 text-brandGreen font-bold mt-2"><span class="text-xl">👇</span> Faça já o seu pedido #Sejaummestre</li>
             </ul>
 
-            <!-- BANNER DE CUPOM (Interativo) -->
+            <!-- BANNER DE CUPOM -->
             <div class="hero-anim w-full max-w-md mx-auto mb-6">
-                <button onclick="aplicarCupom()" class="w-full relative overflow-hidden bg-gradient-to-r from-[#007bf5] to-[#00aaff] rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 text-left group">
-                    <!-- Efeito de brilho -->
+                <button onclick="aplicarCupom()" class="w-full relative overflow-hidden bg-gradient-to-r from-[#007bf5] to-[#00aaff] rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left group">
                     <div class="absolute inset-0 w-1/4 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
                     
                     <div class="flex items-center p-4 sm:p-5 h-full">
-                        <!-- Ícone Tag -->
-                        <div class="bg-yellow-400 p-3 rounded-xl flex-shrink-0 mr-4 shadow-inner">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
+                        <div class="bg-yellow-400 p-3 rounded-xl flex-shrink-0 mr-3 sm:mr-4 shadow-inner">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
                         </div>
-                        <!-- Texto Desconto -->
-                        <div class="border-r border-white/20 pr-4 mr-4 text-white">
-                            <p class="text-sm sm:text-base font-semibold leading-tight">Desconto de</p>
+                        <div class="border-r border-white/20 pr-3 mr-3 sm:pr-4 sm:mr-4 text-white">
+                            <p class="text-[13px] sm:text-base font-semibold leading-tight">Desconto de</p>
                             <p class="text-2xl sm:text-3xl font-black font-poppins leading-none">10%</p>
-                            <p class="text-xs sm:text-sm mt-1 opacity-90">em itens</p>
                         </div>
-                        <!-- Cupom e Ação -->
                         <div class="flex flex-col items-center flex-1">
                             <span class="text-white/90 text-xs mb-1">Use o cupom:</span>
-                            <div class="bg-black/20 backdrop-blur-sm px-4 py-1.5 rounded-lg border border-white/10 w-full text-center">
+                            <div class="bg-black/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 rounded-lg border border-white/10 w-full text-center">
                                 <span class="text-white font-black tracking-wider text-sm sm:text-lg">MESTRE10</span>
                             </div>
-                            <span class="text-white/80 text-[10px] sm:text-xs mt-1.5 text-center">Clique p/ copiar (Mín. R$ 23)</span>
+                            <span class="text-white/80 text-[10px] mt-1.5 text-center">Clique p/ copiar (Mín. R$ 23)</span>
                         </div>
                     </div>
                 </button>
             </div>
 
-            <!-- Botão Cardápio (Alternativo ao Banner) -->
+            <!-- Botão Cardápio -->
             <div class="hero-anim w-full max-w-md mx-auto">
-                <button onclick="focusSearch()" class="w-full sm:w-auto px-8 py-3 bg-white text-brandDark border border-brandSec1/20 font-bold rounded-full shadow hover:bg-brandBg hover:-translate-y-1 transition-all duration-300">
+                <button onclick="focusSearch()" class="w-full sm:w-auto px-8 py-3.5 bg-white text-brandDark border border-brandSec1/20 font-bold rounded-full shadow hover:bg-brandBg active:scale-95 transition-all duration-300">
                     Navegar pelo Cardápio ↓
                 </button>
             </div>
@@ -176,37 +171,38 @@
     </section>
 
     <!-- CARDÁPIO DIGITAL INTEGRADO -->
-    <section id="cardapio" class="py-16 bg-white min-h-screen border-t-2 border-brandBg">
+    <section id="cardapio" class="py-12 bg-white min-h-screen border-t-2 border-brandBg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-8">
-                <h2 class="text-brandGreen font-bold tracking-wider uppercase text-sm mb-2 section-title-anim">Faça o seu pedido</h2>
+                <h2 class="text-brandGreen font-bold tracking-wider uppercase text-sm mb-1 section-title-anim">Faça o seu pedido</h2>
                 <h3 class="text-3xl font-poppins font-bold text-brandDark section-title-anim">O Nosso Cardápio</h3>
             </div>
 
-            <!-- Barra de Busca -->
-            <div class="max-w-xl mx-auto mb-10 relative section-title-anim">
-                <input type="text" id="search-input" placeholder="Buscar por açaí, cremes, bebidas..." class="w-full pl-12 pr-5 py-4 rounded-full bg-brandBg border-2 border-transparent focus:outline-none focus:border-brandGreen focus:bg-white transition-all text-brandDark shadow-sm font-medium">
-                <svg class="w-6 h-6 absolute left-4 top-4 text-brandSec1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <button id="clear-search" class="hidden absolute right-4 top-4 text-brandSec1 hover:text-brandDark" aria-label="Limpar busca">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <!-- Barra de Busca (text-base vital para o iOS não dar zoom) -->
+            <div class="max-w-xl mx-auto mb-8 relative section-title-anim">
+                <input type="text" id="search-input" placeholder="Buscar por açaí, cremes..." class="w-full pl-12 pr-10 py-4 rounded-2xl bg-brandBg border-2 border-transparent focus:outline-none focus:border-brandGreen focus:bg-white transition-all text-brandDark shadow-sm font-medium text-base">
+                <svg class="w-6 h-6 absolute left-4 top-[18px] text-brandSec1 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <button id="clear-search" class="hidden absolute right-4 top-[18px] text-brandSec1 hover:text-brandDark p-1" aria-label="Limpar busca">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
 
-            <!-- Navegação de Categorias (Filtros) -->
-            <div class="relative mb-12" id="category-container">
-                <div id="category-tabs" class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-2 snap-x border-b border-brandBg">
+            <!-- Navegação de Categorias (Correção UX Mobile Aplicada) -->
+            <div class="relative mb-10" id="category-container">
+                <div id="category-tabs" class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-4 snap-x border-b border-brandBg items-center">
                     <!-- Categorias renderizadas via JS -->
                 </div>
-                <!-- Sombra indicadora de scroll p/ mobile -->
+                <!-- Sombra indicadora esmaecida do lado direito -->
                 <div class="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden"></div>
+                <!-- Sombra indicadora esmaecida do lado esquerdo -->
+                <div class="absolute left-0 top-0 bottom-4 w-6 bg-gradient-to-r from-white to-transparent pointer-events-none md:hidden"></div>
             </div>
 
             <!-- Grid de Produtos -->
-            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
                 <!-- Produtos renderizados via JS -->
             </div>
             
-            <!-- Mensagem caso a busca não retorne resultados -->
             <div id="no-results-msg" class="hidden text-center py-10">
                 <p class="text-brandSec1 text-lg">Nenhum produto encontrado. Tente outro termo.</p>
             </div>
@@ -214,23 +210,19 @@
     </section>
 
     <!-- RODAPÉ -->
-    <footer class="bg-brandDark text-brandBg pt-12 pb-24 md:pb-8 border-t-[8px] border-brandGreen mt-10">
+    <footer class="bg-brandDark text-brandBg pt-12 pb-32 md:pb-12 border-t-[8px] border-brandGreen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                
-                <!-- Info -->
                 <div>
                     <h3 class="font-poppins text-xl font-bold mb-4">Mestre do Açaí</h3>
                     <p class="text-brandSec1 text-sm leading-relaxed mb-4">
                         O melhor açaí da região. Eleito Super Restaurante. #Sejaummestre
                     </p>
-                    <a href="https://www.instagram.com/mestredoacai1/" target="_blank" class="inline-flex items-center gap-2 text-brandGreen hover:text-white transition-colors bg-brandSec2/20 px-3 py-2 rounded-lg font-medium text-sm">
+                    <a href="https://www.instagram.com/mestredoacai1/" target="_blank" class="inline-flex items-center gap-2 text-brandGreen hover:text-white transition-colors bg-brandSec2/20 px-4 py-2.5 rounded-lg font-medium text-sm">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         @mestredoacai1
                     </a>
                 </div>
-
-                <!-- Delivery Info -->
                 <div>
                     <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Informações</h4>
                     <ul class="text-sm text-brandBg space-y-2">
@@ -241,30 +233,27 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- PIX Oficial -->
                 <div>
                     <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Pagamento via PIX</h4>
-                    <div class="bg-brandBg text-brandDark p-3 rounded-lg inline-block border border-brandSec1/30">
-                        <p class="text-xs font-bold mb-1">Mestre do Açaí Barreiro LTDA</p>
-                        <p class="font-mono text-sm font-bold bg-white p-1 rounded text-center border border-gray-200">57.988.054/0001-24</p>
+                    <div class="bg-brandBg text-brandDark p-4 rounded-xl inline-block border border-brandSec1/30">
+                        <p class="text-xs font-bold mb-2">Mestre do Açaí Barreiro LTDA</p>
+                        <p class="font-mono text-sm font-bold bg-white p-2 rounded text-center border border-gray-200 select-all">57.988.054/0001-24</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="pt-6 border-t border-brandSec2/40 text-center flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="pt-6 border-t border-brandSec2/40 text-center flex justify-center items-center gap-2">
                 <p class="text-xs text-brandSec1">&copy; 2024 Mestre do Açaí. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
     <!-- CARRINHO FLUTUANTE INFERIOR MOBILE -->
-    <div id="mobile-cart-bar" class="md:hidden fixed bottom-0 left-0 w-full bg-brandDark text-white p-4 flex justify-between items-center z-[80] shadow-[0_-10px_30px_rgba(0,0,0,0.2)] transform translate-y-full transition-transform duration-300">
+    <div id="mobile-cart-bar" class="md:hidden fixed bottom-0 left-0 w-full bg-brandDark text-white p-4 pb-6 flex justify-between items-center z-[80] shadow-[0_-10px_30px_rgba(0,0,0,0.25)] transform translate-y-full transition-transform duration-300 rounded-t-2xl border-t border-brandSec2/50">
         <div class="flex flex-col">
-            <span class="text-xs font-semibold text-brandSec1">Total Pedido</span>
-            <span id="mobile-cart-total" class="font-bold text-lg text-brandGreen">R$ 0,00</span>
+            <span class="text-[11px] font-semibold text-brandSec1 uppercase tracking-wider">Total do Pedido</span>
+            <span id="mobile-cart-total" class="font-bold text-xl text-brandGreen">R$ 0,00</span>
         </div>
-        <button onclick="openCart()" class="bg-brandGreen text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-brandGreen/40">
+        <button onclick="openCart()" class="bg-brandGreen text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-brandGreen/40 active:scale-95 transition-transform">
             Ver Carrinho
             <span id="mobile-cart-badge" class="bg-white text-brandDark w-6 h-6 rounded-full flex items-center justify-center text-xs">0</span>
         </button>
@@ -273,13 +262,13 @@
     <!-- SIDEBAR DO CARRINHO (Desktop / Aberto) -->
     <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-brandBg z-[100] transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
         <!-- Cabeçalho Carrinho -->
-        <div class="p-6 bg-brandDark text-white flex justify-between items-center shadow-md z-10">
+        <div class="p-5 bg-brandDark text-white flex justify-between items-center shadow-md z-10">
             <h3 class="text-xl font-bold font-poppins flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brandGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
                 O Seu Pedido
             </h3>
-            <button id="close-cart" class="text-brandSec1 hover:text-white bg-white/10 p-2 rounded-full transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            <button id="close-cart" class="text-brandSec1 hover:text-white bg-white/10 p-2 rounded-full transition-colors" aria-label="Fechar">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>
         
@@ -289,44 +278,52 @@
             Cupom MESTRE10 aplicado!
         </div>
 
-        <!-- Itens do Carrinho -->
-        <div id="cart-items" class="flex-grow p-4 sm:p-6 overflow-y-auto no-scrollbar flex flex-col gap-3">
+        <!-- Área de Itens do Carrinho -->
+        <div class="flex-grow p-4 sm:p-6 overflow-y-auto no-scrollbar relative bg-white/50">
+            
+            <!-- Mensagem Vazia -->
             <div class="text-center text-brandSec1 mt-10 flex flex-col items-center" id="empty-cart-msg">
-                <div class="bg-white p-4 rounded-full mb-4 shadow-sm border border-brandSec1/20"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brandSec2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div>
+                <div class="bg-white p-5 rounded-full mb-4 shadow-sm border border-brandSec1/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brandSec2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                </div>
                 <p class="font-medium text-lg">O seu carrinho está vazio.</p>
-                <p class="text-sm mt-1">Navegue pelo cardápio e adicione as suas delícias.</p>
+                <p class="text-sm mt-1">Navegue pelo cardápio e adicione delícias.</p>
+                <button onclick="closeCart(); focusSearch();" class="mt-6 px-6 py-2 bg-brandBg text-brandDark rounded-full text-sm font-bold border border-brandSec1/20 shadow-sm">Voltar ao Cardápio</button>
             </div>
-            <!-- Os itens serão injetados aqui via JS -->
+
+            <!-- Lista de Produtos -->
+            <div id="cart-items" class="flex flex-col gap-3">
+                <!-- Os itens serão injetados aqui via JS -->
+            </div>
         </div>
 
         <!-- Rodapé Carrinho (Resumo de Valores) -->
-        <div class="p-6 bg-white rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-10 border-t border-brandSec1/10">
+        <div class="p-6 pb-8 sm:pb-6 bg-white rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-10 border-t border-brandSec1/10">
             <div class="space-y-2 mb-4">
                 <div class="flex justify-between text-sm text-brandDark font-medium">
                     <span>Subtotal:</span>
                     <span id="cart-subtotal">R$ 0,00</span>
                 </div>
-                <!-- Linha de Desconto (Escondida por padrão) -->
+                <!-- Linha de Desconto -->
                 <div id="cart-discount-row" class="hidden flex justify-between text-sm text-brandBlue font-bold">
                     <span>Desconto (10%):</span>
                     <span id="cart-discount-val">- R$ 0,00</span>
                 </div>
                 <!-- Alerta de pedido mínimo para cupom -->
-                <div id="min-order-warning" class="hidden text-xs text-red-500 font-medium bg-red-50 p-2 rounded border border-red-100 mt-1">
+                <div id="min-order-warning" class="hidden text-xs text-red-500 font-medium bg-red-50 p-2 rounded-lg border border-red-100 mt-1">
                     Faltam R$ <span id="val-falta">0,00</span> para ativar o desconto (Mín R$ 23).
                 </div>
                 
-                <div class="border-t border-dashed border-brandSec1/30 pt-2 flex justify-between items-center mt-2">
+                <div class="border-t border-dashed border-brandSec1/30 pt-3 flex justify-between items-center mt-2">
                     <span class="font-bold text-brandDark text-lg">Total:</span>
-                    <span id="cart-total" class="text-2xl font-black text-brandGreen">R$ 0,00</span>
+                    <span id="cart-total" class="text-3xl font-black text-brandGreen font-poppins">R$ 0,00</span>
                 </div>
             </div>
             
-            <button id="checkout-btn" class="w-full py-4 bg-brandGreen text-white font-bold rounded-xl hover:bg-[#7a994b] transition-colors shadow-lg shadow-brandGreen/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2" disabled>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                Pedir no WhatsApp
+            <button id="checkout-btn" class="w-full py-4 bg-brandGreen text-white font-bold rounded-xl hover:bg-[#7a994b] transition-all shadow-lg shadow-brandGreen/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 active:scale-95 text-lg" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Finalizar Pedido
             </button>
-            <p class="text-center text-[10px] text-brandSec1 mt-3">PIX Oficial: 57.988.054/0001-24</p>
         </div>
     </div>
     
@@ -457,7 +454,7 @@
             CATEGORIES.forEach(cat => {
                 const btn = document.createElement('button');
                 const isActive = cat === currentCategory;
-                btn.className = `whitespace-nowrap px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 ${isActive ? 'bg-brandDark text-white shadow-md scale-105' : 'bg-white text-brandSec1 border border-brandBg hover:bg-brandBg hover:text-brandDark'}`;
+                btn.className = `whitespace-nowrap px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${isActive ? 'bg-brandDark text-white shadow-md scale-105' : 'bg-white text-brandSec1 border border-brandBg hover:bg-brandBg hover:text-brandDark'} snap-center`;
                 btn.innerText = cat;
                 btn.onclick = () => {
                     currentCategory = cat;
@@ -465,14 +462,16 @@
                     clearSearchBtn.classList.add('hidden');
                     renderCategories();
                     renderProducts();
-                    document.getElementById('cardapio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Faz o botão ativo ficar visível na rolagem
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 };
                 container.appendChild(btn);
             });
             
-            // Adiciona espaçador invisível no final para evitar corte no scroll horizontal do mobile
+            // UX Mobile: Adiciona um espaçador robusto (w-12 = 48px) no final para garantir que 
+            // a última aba ("Bebidas") passe totalmente do desfoque da sombra direita.
             const spacer = document.createElement('div');
-            spacer.className = "shrink-0 w-4 md:hidden";
+            spacer.className = "shrink-0 w-12 h-1 md:hidden";
             container.appendChild(spacer);
         }
 
@@ -497,19 +496,20 @@
 
                     card.innerHTML = `
                         ${highlightTag}
-                        <div class="relative h-48 sm:h-56 rounded-xl overflow-hidden mb-4 bg-gray-100">
+                        <div class="relative h-48 sm:h-52 rounded-xl overflow-hidden mb-4 bg-gray-100">
                             <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div class="flex-grow flex flex-col justify-between">
                             <div>
                                 <h4 class="text-lg font-bold font-poppins text-brandDark leading-tight mb-1">${product.name}</h4>
-                                <p class="text-brandSec2 text-xs leading-relaxed mb-4">${product.desc}</p>
+                                <p class="text-brandSec2 text-xs leading-relaxed mb-4 line-clamp-2">${product.desc}</p>
                             </div>
-                            <div class="flex items-center justify-between mt-auto">
+                            <div class="flex items-center justify-between mt-auto pt-2 border-t border-brandBg/50">
                                 <span class="text-xl font-black text-brandGreen font-poppins">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
-                                <button onclick="adicionarAoCarrinho(${product.id})" class="w-10 h-10 bg-brandBg rounded-full flex items-center justify-center text-brandDark hover:bg-brandDark hover:text-white transition-colors duration-300 shadow-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                                <!-- Aumentei a área de clique para UX Mobile (w-12 h-12) -->
+                                <button onclick="adicionarAoCarrinho(${product.id})" class="w-12 h-12 bg-brandBg rounded-full flex items-center justify-center text-brandDark hover:bg-brandGreen hover:text-white transition-colors duration-300 shadow-sm active:scale-90" aria-label="Adicionar ${product.name}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                                 </button>
                             </div>
                         </div>
@@ -526,32 +526,35 @@
         renderProducts();
 
         /* =========================================
-           SISTEMA DE TOAST NOTIFICATION E CUPOM
+           SISTEMA DE TOAST NOTIFICATION (SweetAlert2)
+           E CUPOM (Confetti)
         ========================================= */
+        const modernToast = Swal.mixin({
+            toast: true,
+            position: 'bottom',
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
         function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            const isSuccess = type === 'success';
-            
-            toast.className = `toast-enter flex items-center gap-3 px-5 py-3 rounded-xl shadow-2xl text-white font-medium text-sm border border-white/20 ${isSuccess ? 'bg-brandDark' : 'bg-red-500'}`;
-            
-            const icon = isSuccess 
-                ? `<svg class="w-5 h-5 text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`
-                : `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
-                
-            toast.innerHTML = `${icon} <span>${message}</span>`;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateY(20px) translateX(-50%)';
-                toast.style.transition = 'all 0.4s ease';
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
+            modernToast.fire({
+                icon: type,
+                title: message,
+                background: type === 'success' ? '#63336f' : '#ef4444',
+                color: '#ffffff',
+                iconColor: type === 'success' ? '#90b05c' : '#ffffff',
+                customClass: {
+                    popup: 'rounded-2xl shadow-2xl border border-white/10'
+                }
+            });
         }
 
-        // Lógica de Cupom
+        // Lógica de Cupom com Confetti
         let cupomAplicado = false;
         
         function aplicarCupom() {
@@ -568,13 +571,22 @@
                 document.getElementById('cart-coupon-alert').classList.add('flex');
             }
             
+            // Efeito wow de Confetti para gamificação e UX positiva
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#0084ff', '#90b05c', '#63336f', '#f2eff0'],
+                zIndex: 10000
+            });
+            
             showToast('Cupom MESTRE10 copiado e ativado!', 'success');
             atualizarCarrinhoDOM();
         }
 
 
         /* =========================================
-           LÓGICA DO CARRINHO DE COMPRAS
+           LÓGICA DO CARRINHO DE COMPRAS (CORRIGIDA)
         ========================================= */
         let cart = [];
         const numWhatsAppBusiness = "553192316707"; 
@@ -582,6 +594,7 @@
         const cartSidebar = document.getElementById('cart-sidebar');
         const cartOverlay = document.getElementById('cart-overlay');
         const cartItemsContainer = document.getElementById('cart-items');
+        const emptyCartMsg = document.getElementById('empty-cart-msg');
         const checkoutBtn = document.getElementById('checkout-btn');
 
         function openCart() {
@@ -621,6 +634,7 @@
             showToast(`1x ${product.name} adicionado!`);
             atualizarCarrinhoDOM();
             
+            // Feedback visual no ícone
             gsap.fromTo("#cart-count", {scale: 1.5}, {scale: 1, duration: 0.3, ease: "back.out"});
         }
 
@@ -632,19 +646,20 @@
             atualizarCarrinhoDOM();
         }
 
+        // Função corrigida: Agora os itens e a mensagem vazia vivem em div separados e não se anulam!
         function atualizarCarrinhoDOM() {
-            cartItemsContainer.innerHTML = '';
+            cartItemsContainer.innerHTML = ''; // Limpa só a div da lista
             let subtotal = 0;
             let qtdItens = 0;
 
             if (cart.length === 0) {
-                document.getElementById('empty-cart-msg').style.display = 'flex';
+                emptyCartMsg.style.display = 'flex'; // Exibe a msg
                 checkoutBtn.disabled = true;
-                document.getElementById('mobile-cart-bar').classList.add('translate-y-full'); // Esconde barra mobile
+                document.getElementById('mobile-cart-bar').classList.add('translate-y-full'); 
             } else {
-                document.getElementById('empty-cart-msg').style.display = 'none';
+                emptyCartMsg.style.display = 'none'; // Esconde a msg
                 checkoutBtn.disabled = false;
-                document.getElementById('mobile-cart-bar').classList.remove('translate-y-full'); // Exibe barra mobile
+                document.getElementById('mobile-cart-bar').classList.remove('translate-y-full'); 
 
                 cart.forEach((item, index) => {
                     subtotal += item.price * item.quantidade;
@@ -654,13 +669,14 @@
                     itemDiv.className = 'flex justify-between items-center bg-white p-3 rounded-xl border border-brandSec1/20 shadow-sm';
                     itemDiv.innerHTML = `
                         <div class="flex-1 pr-2">
-                            <h5 class="text-brandDark font-bold text-sm leading-tight">${item.name}</h5>
+                            <h5 class="text-brandDark font-bold text-[13px] leading-tight">${item.name}</h5>
                             <p class="text-brandSec1 font-semibold text-xs mt-1">R$ ${(item.price * item.quantidade).toFixed(2).replace('.', ',')}</p>
                         </div>
-                        <div class="flex items-center gap-2 bg-brandBg p-1 rounded-lg border border-gray-200">
-                            <button onclick="alterarQuantidade(${index}, -1)" class="w-6 h-6 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-red-500 font-bold">-</button>
+                        <div class="flex items-center gap-2 bg-brandBg p-1.5 rounded-lg border border-gray-200">
+                            <!-- Tap targets do carrinho tb aumentados para UX -->
+                            <button onclick="alterarQuantidade(${index}, -1)" class="w-8 h-8 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-red-500 font-bold active:scale-90 transition-all">-</button>
                             <span class="text-sm font-bold w-4 text-center">${item.quantidade}</span>
-                            <button onclick="alterarQuantidade(${index}, 1)" class="w-6 h-6 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-brandGreen font-bold">+</button>
+                            <button onclick="alterarQuantidade(${index}, 1)" class="w-8 h-8 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-brandGreen font-bold active:scale-90 transition-all">+</button>
                         </div>
                     `;
                     cartItemsContainer.appendChild(itemDiv);
@@ -745,8 +761,8 @@
         
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 10) nav.classList.add('shadow-lg');
-            else nav.classList.remove('shadow-lg');
+            if (window.scrollY > 10) nav.classList.add('shadow-md');
+            else nav.classList.remove('shadow-md');
         });
     </script>
 </body>
