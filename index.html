@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- AJUSTE 1: lang corrigido de pt-PT para pt-BR (conteúdo é Português do Brasil) -->
 <html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -7,13 +6,12 @@
     <title>Mestre do Açaí Delivery | Cardápio Digital</title>
     <meta name="description" content="O melhor açaí da região. Eleito Super Restaurante com mais de 100 mil açaís vendidos. Peça agora!">
 
-    <!-- AJUSTE 2: Favicon adicionado (favicon.ico deve ficar na mesma pasta) -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
     <meta name="theme-color" content="#63336f">
 
-    <!-- AJUSTE 3: Open Graph / Compartilhamento em redes sociais -->
+    <!-- Open Graph / Compartilhamento em redes sociais -->
     <meta property="og:type"        content="website">
     <meta property="og:title"       content="Mestre do Açaí Delivery | Cardápio Digital">
     <meta property="og:description" content="O melhor açaí da região. Eleito Super Restaurante com mais de 100 mil açaís vendidos. Peça agora!">
@@ -46,7 +44,6 @@
                         poppins: ['Poppins', 'sans-serif'],
                         inter:   ['Inter',   'sans-serif'],
                     },
-                    /* AJUSTE 4: Keyframe do shimmer declarado corretamente no config */
                     keyframes: {
                         shimmer: { '100%': { transform: 'translateX(400%)' } }
                     },
@@ -75,7 +72,7 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Scroll horizontal das categorias */
+        /* Scroll horizontal das categorias - UX ajustada */
         .category-scroll {
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
@@ -88,9 +85,7 @@
 </head>
 <body class="antialiased selection:bg-brandGreen selection:text-white pb-28 md:pb-0">
 
-    <!-- ═══════════════════════════════════
-         CABEÇALHO
-    ═══════════════════════════════════ -->
+    <!-- CABEÇALHO -->
     <header class="fixed top-0 left-0 w-full z-50 bg-brandBg/95 backdrop-blur-md border-b border-brandSec1/20 transition-all duration-300 shadow-sm" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20 md:h-24">
@@ -105,7 +100,6 @@
                 <nav class="hidden lg:flex space-x-6 items-center" aria-label="Navegação principal">
                     <a href="#inicio" class="text-brandDark font-medium hover:text-brandGreen transition-colors">Início</a>
                     <a href="#cardapio" class="text-brandDark font-medium hover:text-brandGreen transition-colors">Cardápio</a>
-                    <!-- AJUSTE 5: rel="noopener noreferrer" em todos os links externos -->
                     <a href="https://www.instagram.com/mestredoacai1/" target="_blank" rel="noopener noreferrer"
                        class="text-brandDark hover:text-brandGreen transition-colors flex items-center gap-1">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -146,10 +140,8 @@
         </div>
     </header>
 
-    <!-- ═══════════════════════════════════
-         HERO
-    ═══════════════════════════════════ -->
     <main>
+    <!-- HERO SECTION -->
     <section id="inicio" class="pt-28 pb-10 lg:pt-36 lg:pb-16 overflow-hidden relative">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
 
@@ -210,9 +202,7 @@
         </div>
     </section>
 
-    <!-- ═══════════════════════════════════
-         CARDÁPIO
-    ═══════════════════════════════════ -->
+    <!-- CARDÁPIO DIGITAL INTEGRADO -->
     <section id="cardapio" class="py-12 bg-white min-h-screen border-t-2 border-brandBg" aria-label="Cardápio digital">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-8">
@@ -220,7 +210,7 @@
                 <h2 class="text-3xl font-poppins font-bold text-brandDark section-title-anim">O Nosso Cardápio</h2>
             </div>
 
-            <!-- Barra de Busca (text-base evita zoom automático no iOS) -->
+            <!-- Barra de Busca -->
             <div class="max-w-xl mx-auto mb-8 relative section-title-anim">
                 <label for="search-input" class="sr-only">Buscar produtos</label>
                 <input type="search" id="search-input" placeholder="Buscar por açaí, cremes..."
@@ -237,14 +227,12 @@
                 </button>
             </div>
 
-            <!-- Categorias -->
+            <!-- Categorias (Ajustado para evitar cortes - Gradients Removidos) -->
             <div class="relative mb-10" id="category-container">
                 <div id="category-tabs" role="tablist" aria-label="Categorias do cardápio"
-                    class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-4 snap-x border-b border-brandBg items-center">
+                    class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-4 snap-x border-b border-brandBg items-center after:content-[''] after:w-10 after:shrink-0">
                     <!-- Renderizado via JS -->
                 </div>
-                <div class="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden" aria-hidden="true"></div>
-                <div class="absolute left-0 top-0 bottom-4 w-6  bg-gradient-to-r from-white to-transparent pointer-events-none md:hidden" aria-hidden="true"></div>
             </div>
 
             <!-- Grid de Produtos -->
@@ -259,15 +247,12 @@
     </section>
     </main>
 
-    <!-- ═══════════════════════════════════
-         RODAPÉ
-         AJUSTE 6: 4ª coluna adicionada → grade lg:grid-cols-4 agora está correta
-    ═══════════════════════════════════ -->
+    <!-- RODAPÉ -->
     <footer class="bg-brandDark text-brandBg pt-12 pb-32 md:pb-12 border-t-[8px] border-brandGreen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
 
-                <!-- Coluna 1 — Marca -->
+                <!-- Coluna 1 -->
                 <div>
                     <h3 class="font-poppins text-xl font-bold mb-4">Mestre do Açaí</h3>
                     <p class="text-brandSec1 text-sm leading-relaxed mb-4">
@@ -282,7 +267,7 @@
                     </a>
                 </div>
 
-                <!-- Coluna 2 — Informações -->
+                <!-- Coluna 2 -->
                 <div>
                     <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Informações</h4>
                     <ul class="text-sm text-brandBg space-y-2">
@@ -294,7 +279,7 @@
                     </ul>
                 </div>
 
-                <!-- Coluna 3 — PIX -->
+                <!-- Coluna 3 -->
                 <div>
                     <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Pagamento via PIX</h4>
                     <div class="bg-brandBg text-brandDark p-4 rounded-xl inline-block border border-brandSec1/30">
@@ -303,7 +288,7 @@
                     </div>
                 </div>
 
-                <!-- AJUSTE 6 (nova coluna): Links Rápidos -->
+                <!-- Coluna 4: Links Rápidos -->
                 <div>
                     <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Links Rápidos</h4>
                     <ul class="text-sm space-y-3">
@@ -332,9 +317,7 @@
         </div>
     </footer>
 
-    <!-- ═══════════════════════════════════
-         BARRA MOBILE INFERIOR
-    ═══════════════════════════════════ -->
+    <!-- BARRA MOBILE INFERIOR -->
     <div id="mobile-cart-bar"
         class="md:hidden fixed bottom-0 left-0 w-full bg-brandDark text-white p-4 pb-6 flex justify-between items-center z-[80] shadow-[0_-10px_30px_rgba(0,0,0,0.25)] transform translate-y-full transition-transform duration-300 rounded-t-2xl border-t border-brandSec2/50"
         aria-live="polite">
@@ -348,14 +331,12 @@
         </button>
     </div>
 
-    <!-- ═══════════════════════════════════
-         SIDEBAR DO CARRINHO
-    ═══════════════════════════════════ -->
+    <!-- SIDEBAR DO CARRINHO -->
     <aside id="cart-sidebar" role="dialog" aria-modal="true" aria-label="Carrinho de compras"
         class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-brandBg z-[100] transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
 
         <!-- Cabeçalho -->
-        <div class="p-5 bg-brandDark text-white flex justify-between items-center shadow-md z-10">
+        <div class="p-5 bg-brandDark text-white flex justify-between items-center shadow-md z-10 shrink-0">
             <h3 class="text-xl font-bold font-poppins flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brandGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -372,7 +353,7 @@
 
         <!-- Alerta Cupom -->
         <div id="cart-coupon-alert"
-            class="hidden bg-brandBlue/10 text-brandBlue px-4 py-3 text-sm font-semibold border-b border-brandBlue/20 items-center justify-center gap-2"
+            class="hidden shrink-0 bg-brandBlue/10 text-brandBlue px-4 py-3 text-sm font-semibold border-b border-brandBlue/20 items-center justify-center gap-2"
             role="status">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -380,8 +361,8 @@
             Cupom MESTRE10 aplicado!
         </div>
 
-        <!-- Itens -->
-        <div class="flex-grow p-4 sm:p-6 overflow-y-auto no-scrollbar relative bg-white/50">
+        <!-- Scrollable Middle Section -->
+        <div class="flex-grow p-4 sm:p-6 overflow-y-auto no-scrollbar relative bg-white/50 flex flex-col gap-6">
 
             <!-- Estado vazio -->
             <div class="text-center text-brandSec1 mt-10 flex flex-col items-center" id="empty-cart-msg">
@@ -393,19 +374,68 @@
                 <p class="font-medium text-lg">O seu carrinho está vazio.</p>
                 <p class="text-sm mt-1">Navegue pelo cardápio e adicione delícias.</p>
                 <button onclick="closeCart(); focusSearch();"
-                    class="mt-6 px-6 py-2 bg-brandBg text-brandDark rounded-full text-sm font-bold border border-brandSec1/20 shadow-sm">
+                    class="mt-6 px-6 py-2 bg-brandBg text-brandDark rounded-full text-sm font-bold border border-brandSec1/20 shadow-sm hover:bg-[#dfcce6] transition-colors">
                     Voltar ao Cardápio
                 </button>
             </div>
 
-            <!-- Lista de itens -->
-            <div id="cart-items" class="flex flex-col gap-3" role="list" aria-label="Itens no carrinho">
-                <!-- Injetado via JS -->
-            </div>
-        </div>
+            <!-- Conteúdo Preenchido (Itens, Upsell, Form) -->
+            <div id="cart-content-wrapper" class="hidden flex-col gap-6">
+                
+                <!-- Lista de itens -->
+                <div id="cart-items" class="flex flex-col gap-3" role="list" aria-label="Itens no carrinho">
+                    <!-- Injetado via JS -->
+                </div>
 
-        <!-- Rodapé Carrinho -->
-        <div class="p-6 pb-8 sm:pb-6 bg-white rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-10 border-t border-brandSec1/10">
+                <!-- Nova Seção de Upsell -->
+                <div id="cart-upsell" class="bg-brandBg/80 p-4 rounded-xl border border-brandSec1/10 shadow-sm hidden flex-col">
+                    <h6 class="text-sm font-bold text-brandDark mb-3">Combina perfeitamente. Leve junto! 👇</h6>
+                    <div class="flex overflow-x-auto gap-3 pb-2 no-scrollbar" id="upsell-items">
+                        <!-- Injetado via JS -->
+                    </div>
+                </div>
+
+                <!-- Novo Formulário de Entrega/Retirada -->
+                <div class="bg-white p-4 rounded-xl border border-brandSec1/20 shadow-sm flex flex-col gap-4">
+                    <h6 class="text-sm font-bold text-brandDark">Opção de Recebimento</h6>
+                    
+                    <!-- Abas de Opção -->
+                    <div class="flex gap-2 p-1.5 bg-brandBg rounded-lg">
+                        <button id="tab-delivery" class="flex-1 py-2 text-sm font-bold bg-white text-brandGreen shadow rounded-md transition-all">Entrega</button>
+                        <button id="tab-pickup" class="flex-1 py-2 text-sm font-bold text-brandSec1 hover:text-brandDark transition-all">Retirada</button>
+                    </div>
+
+                    <!-- Campos do Cliente (Comum) -->
+                    <div class="flex flex-col gap-3">
+                        <input type="text" id="cust-name" placeholder="Seu Nome Completo" class="w-full text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none">
+                    </div>
+
+                    <!-- Campos de Endereço (Só aparece se for Entrega) -->
+                    <div id="form-delivery-info" class="flex flex-col gap-3">
+                        <input type="text" id="cust-street" placeholder="Rua / Avenida" class="w-full text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none">
+                        <div class="flex gap-3">
+                            <input type="text" id="cust-number" placeholder="Número" class="w-1/3 text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none">
+                            <input type="text" id="cust-neighborhood" placeholder="Bairro" class="w-2/3 text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none">
+                        </div>
+                        <input type="text" id="cust-complement" placeholder="Complemento / Ponto de Ref. (Opcional)" class="w-full text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none">
+                    </div>
+
+                    <!-- Pagamento -->
+                    <div class="flex flex-col gap-2 mt-1">
+                        <h6 class="text-sm font-bold text-brandDark">Forma de Pagamento</h6>
+                        <select id="cust-payment" class="w-full text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none cursor-pointer">
+                            <option value="PIX">PIX</option>
+                            <option value="Cartão">Cartão (Débito/Crédito na maquininha)</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div> <!-- Fim Wrapper -->
+        </div> <!-- Fim Scroll Area -->
+
+        <!-- Rodapé Carrinho (Resumo de Valores) -->
+        <div class="p-6 pb-8 sm:pb-6 bg-white rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-10 border-t border-brandSec1/10 shrink-0">
             <div class="space-y-2 mb-4" aria-live="polite">
                 <div class="flex justify-between text-sm text-brandDark font-medium">
                     <span>Subtotal:</span>
@@ -443,9 +473,7 @@
         aria-hidden="true">
     </div>
 
-    <!-- ═══════════════════════════════════
-         SCRIPTS
-    ═══════════════════════════════════ -->
+    <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
 
     <script>
@@ -454,79 +482,69 @@
     ───────────────────────────────────────── */
     const PRODUCTS = [
         // MAIS VENDIDOS
-        { id: 101, category: "Mais Vendidos",    name: "Mix Açaí NinhoTella",          desc: "Açaí + leite em pó + morango + Nutella + creme de Ninho",                 price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: true  },
-        { id: 102, category: "Mais Vendidos",    name: "Creme de Açaí 500 ml",         desc: "Creme + 3 Complementos",                                                  price: 30, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false },
-        { id: 103, category: "Mais Vendidos",    name: "Creme de Açaí 355 ml",         desc: "Creme + 3 Complementos",                                                  price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
-        { id: 104, category: "Mais Vendidos",    name: "Açaí no Copo 500 ml",          desc: "Inclui: 3 complementos comuns + 1 especial",                              price: 30, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
-        { id: 105, category: "Mais Vendidos",    name: "Açaí Ninho Trufado 1 Litro",   desc: "Produto Destaque da Casa",                                                price: 47, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
+        { id: 101, category: "Mais Vendidos",    name: "Mix Açaí NinhoTella",          desc: "Açaí + leite em pó + morango + Nutella + creme de Ninho",                  price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: true  },
+        { id: 102, category: "Mais Vendidos",    name: "Creme de Açaí 500 ml",         desc: "Creme + 3 Complementos",                                                   price: 30, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false },
+        { id: 103, category: "Mais Vendidos",    name: "Creme de Açaí 355 ml",         desc: "Creme + 3 Complementos",                                                   price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
+        { id: 104, category: "Mais Vendidos",    name: "Açaí no Copo 500 ml",          desc: "Inclui: 3 complementos comuns + 1 especial",                               price: 30, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
+        { id: 105, category: "Mais Vendidos",    name: "Açaí Ninho Trufado 1 Litro",   desc: "Produto Destaque da Casa",                                                 price: 47, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
 
         // MIXES ESPECIAIS
-        { id: 201, category: "Mixes Especiais",  name: "Mix Açaí com Leite em Pó",     desc: "Açaí com 2 camadas de leite em pó",                                       price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
-        { id: 202, category: "Mixes Especiais",  name: "Açaí + Leite em Pó + Condensado", desc: "Clássico Irresistível",                                                price: 25, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
-        { id: 203, category: "Mixes Especiais",  name: "Açaí + Ninho + Condensado + Morango", desc: "Toque de frutas frescas",                                          price: 28, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
-        { id: 204, category: "Mixes Especiais",  name: "Mix Maracujá com Nutella",     desc: "Açaí + Nutella + creme de maracujá + leite em pó + maracujá",             price: 32, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
-        { id: 205, category: "Mixes Especiais",  name: "Mix Açaí Morango",             desc: "Açaí + leite em pó + morango + Bis + creme de morango",                   price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
-        { id: 206, category: "Mixes Especiais",  name: "Mix Açaí Morango & Avelã",     desc: "Açaí + leite em pó + creme morango + Sonho de Valsa + creme avelã",       price: 35, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: true  },
+        { id: 201, category: "Mixes Especiais",  name: "Mix Açaí com Leite em Pó",     desc: "Açaí com 2 camadas de leite em pó",                                        price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
+        { id: 202, category: "Mixes Especiais",  name: "Açaí + Leite em Pó + Condensado", desc: "Clássico Irresistível",                                                 price: 25, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
+        { id: 203, category: "Mixes Especiais",  name: "Açaí + Ninho + Condensado + Morango", desc: "Toque de frutas frescas",                                           price: 28, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+        { id: 204, category: "Mixes Especiais",  name: "Mix Maracujá com Nutella",     desc: "Açaí + Nutella + creme de maracujá + leite em pó + maracujá",              price: 32, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
+        { id: 205, category: "Mixes Especiais",  name: "Mix Açaí Morango",             desc: "Açaí + leite em pó + morango + Bis + creme de morango",                    price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+        { id: 206, category: "Mixes Especiais",  name: "Mix Açaí Morango & Avelã",     desc: "Açaí + leite em pó + creme morango + Sonho de Valsa + creme avelã",        price: 35, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: true  },
 
         // AÇAÍ NO COPO
-        { id: 301, category: "Açaí no Copo",     name: "Açaí no Copo 300 ml",          desc: "3 complementos comuns + 1 especial",                                      price: 25, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
-        { id: 302, category: "Açaí no Copo",     name: "Açaí no Copo 500 ml",          desc: "3 complementos comuns + 1 especial",                                      price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
-        { id: 303, category: "Açaí no Copo",     name: "Açaí no Copo 710 ml",          desc: "3 complementos comuns + 1 especial",                                      price: 35, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
+        { id: 301, category: "Açaí no Copo",     name: "Açaí no Copo 300 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 25, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
+        { id: 302, category: "Açaí no Copo",     name: "Açaí no Copo 500 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+        { id: 303, category: "Açaí no Copo",     name: "Açaí no Copo 710 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 35, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
 
         // CREME DE AÇAÍ
-        { id: 401, category: "Creme de Açaí",    name: "Creme de Açaí 355 ml",         desc: "Acompanha 3 complementos",                                                price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
-        { id: 402, category: "Creme de Açaí",    name: "Creme de Açaí 500 ml",         desc: "Acompanha 3 complementos",                                                price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
-        { id: 403, category: "Creme de Açaí",    name: "Creme de Açaí 700 ml",         desc: "Acompanha 3 complementos",                                                price: 35, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false },
-        { id: 404, category: "Creme de Açaí",    name: "Creme de Açaí 1 Litro",        desc: "Acompanha 3 complementos",                                                price: 42, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
-        { id: 405, category: "Creme de Açaí",    name: "Creme Zero Açúcar 1L",         desc: "Acompanha 3 complementos (Zero)",                                         price: 49, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
-        { id: 406, category: "Creme de Açaí",    name: "Opção Pura",                   desc: "Açaí com Leite em Pó + Condensado + Banana + Granola",                    price: 28, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+        { id: 401, category: "Creme de Açaí",    name: "Creme de Açaí 355 ml",         desc: "Acompanha 3 complementos",                                                 price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
+        { id: 402, category: "Creme de Açaí",    name: "Creme de Açaí 500 ml",         desc: "Acompanha 3 complementos",                                                 price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+        { id: 403, category: "Creme de Açaí",    name: "Creme de Açaí 700 ml",         desc: "Acompanha 3 complementos",                                                 price: 35, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false },
+        { id: 404, category: "Creme de Açaí",    name: "Creme de Açaí 1 Litro",        desc: "Acompanha 3 complementos",                                                 price: 42, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
+        { id: 405, category: "Creme de Açaí",    name: "Creme Zero Açúcar 1L",         desc: "Acompanha 3 complementos (Zero)",                                          price: 49, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
+        { id: 406, category: "Creme de Açaí",    name: "Opção Pura",                   desc: "Açaí com Leite em Pó + Condensado + Banana + Granola",                     price: 28, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
 
         // SORVETE GOURMET
-        { id: 501, category: "Sorvete Gourmet",  name: "Sorvete 300 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                  price: 25, img: "https://images.unsplash.com/photo-1570197781417-0a823758030d?w=500&q=80", isHighlight: false },
-        { id: 502, category: "Sorvete Gourmet",  name: "Sorvete 500 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                  price: 30, img: "https://images.unsplash.com/photo-1558223616-2c700e408ec2?w=500&q=80", isHighlight: false },
-        { id: 503, category: "Sorvete Gourmet",  name: "Sorvete 710 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                  price: 35, img: "https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?w=500&q=80", isHighlight: true  },
+        { id: 501, category: "Sorvete Gourmet",  name: "Sorvete 300 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 25, img: "https://images.unsplash.com/photo-1570197781417-0a823758030d?w=500&q=80", isHighlight: false },
+        { id: 502, category: "Sorvete Gourmet",  name: "Sorvete 500 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 30, img: "https://images.unsplash.com/photo-1558223616-2c700e408ec2?w=500&q=80", isHighlight: false },
+        { id: 503, category: "Sorvete Gourmet",  name: "Sorvete 710 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 35, img: "https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?w=500&q=80", isHighlight: true  },
 
         // VITAMINAS
-        { id: 601, category: "Vitaminas",        name: "Vitamina de Açaí 300 ml",      desc: "Inclui 1 adicional comum",                                                price: 17, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
-        { id: 602, category: "Vitaminas",        name: "Vitamina de Açaí 500 ml",      desc: "Inclui 1 adicional comum",                                                price: 22, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
-        { id: 603, category: "Vitaminas",        name: "Vitamina de Açaí 700 ml",      desc: "Inclui 1 adicional comum",                                                price: 27, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
+        { id: 601, category: "Vitaminas",        name: "Vitamina de Açaí 300 ml",      desc: "Inclui 1 adicional comum",                                                 price: 17, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
+        { id: 602, category: "Vitaminas",        name: "Vitamina de Açaí 500 ml",      desc: "Inclui 1 adicional comum",                                                 price: 22, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
+        { id: 603, category: "Vitaminas",        name: "Vitamina de Açaí 700 ml",      desc: "Inclui 1 adicional comum",                                                 price: 27, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
 
         // PALETAS
-        { id: 701, category: "Paletas Mexicanas",name: "Paleta Rafaello",              desc: "Picolé recheado artesanal",                                               price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: false },
-        { id: 702, category: "Paletas Mexicanas",name: "Paleta Ferrero Rocher",        desc: "Picolé recheado artesanal",                                               price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: false },
-        { id: 703, category: "Paletas Mexicanas",name: "Paleta Morango com Nutella",   desc: "Clássica irresistível",                                                   price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: true  },
+        { id: 701, category: "Paletas Mexicanas",name: "Paleta Rafaello",              desc: "Picolé recheado artesanal",                                                price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: false },
+        { id: 702, category: "Paletas Mexicanas",name: "Paleta Ferrero Rocher",        desc: "Picolé recheado artesanal",                                                price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: false },
+        { id: 703, category: "Paletas Mexicanas",name: "Paleta Morango com Nutella",   desc: "Clássica irresistível",                                                    price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: true  },
 
         // BEBIDAS
-        { id: 801, category: "Bebidas",          name: "Água 500 ml / com Gás",        desc: "Garrafa Plástica",                                                        price:  4, img: "https://images.unsplash.com/photo-1616118132534-381148898bb4?w=500&q=80", isHighlight: false },
-        { id: 802, category: "Bebidas",          name: "Refrigerantes Lata (Vários)",  desc: "Coca, Fanta, Sprite, Schweppes",                                          price:  6, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&q=80", isHighlight: false },
-        { id: 803, category: "Bebidas",          name: "Red Bull",                     desc: "Lata 250ml",                                                              price: 12, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&q=80", isHighlight: false },
-        { id: 804, category: "Bebidas",          name: "Heineken 330 ml",              desc: "Long Neck",                                                               price:  9, img: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500&q=80", isHighlight: false },
+        { id: 801, category: "Bebidas",          name: "Água 500 ml / com Gás",        desc: "Garrafa Plástica",                                                         price:  4, img: "https://images.unsplash.com/photo-1616118132534-381148898bb4?w=500&q=80", isHighlight: false },
+        { id: 802, category: "Bebidas",          name: "Refrigerantes Lata (Vários)",  desc: "Coca, Fanta, Sprite, Schweppes",                                           price:  6, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&q=80", isHighlight: false },
+        { id: 803, category: "Bebidas",          name: "Red Bull",                     desc: "Lata 250ml",                                                               price: 12, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&q=80", isHighlight: false },
+        { id: 804, category: "Bebidas",          name: "Heineken 330 ml",              desc: "Long Neck",                                                                price:  9, img: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500&q=80", isHighlight: false },
     ];
 
     const CATEGORIES = [...new Set(PRODUCTS.map(p => p.category))];
     let currentCategory = "Mais Vendidos";
 
-    /* ─────────────────────────────────────────
-       AJUSTE 7: Helper de formatação BRL
-    ───────────────────────────────────────── */
     const formatBRL = val => val.toFixed(2).replace('.', ',');
 
-    /* ─────────────────────────────────────────
-       AJUSTE 8: Clipboard API moderna (com fallback seguro)
-       Substitui o depreciado document.execCommand('copy')
-    ───────────────────────────────────────── */
     async function copyToClipboard(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             try {
                 await navigator.clipboard.writeText(text);
                 return true;
-            } catch { /* fallback abaixo */ }
+            } catch { /* fallback */ }
         }
-        // Fallback para navegadores antigos / iOS sem permissão
         const el = Object.assign(document.createElement('textarea'), {
-            value: text,
-            readOnly: true,
-            style: 'position:absolute;left:-9999px;top:0'
+            value: text, readOnly: true, style: 'position:absolute;left:-9999px;top:0'
         });
         document.body.appendChild(el);
         el.select();
@@ -554,16 +572,13 @@
                 });
                 return;
             } catch (err) {
-                if (err.name === 'AbortError') return; // Usuário cancelou — não fazer nada
+                if (err.name === 'AbortError') return;
             }
         }
         await copyToClipboard(url);
         showToast('Link da loja copiado com sucesso!', 'success');
     }
 
-    /* ─────────────────────────────────────────
-       BUSCA NO CARDÁPIO
-    ───────────────────────────────────────── */
     const searchInput       = document.getElementById('search-input');
     const clearSearchBtn    = document.getElementById('clear-search');
     const noResultsMsg      = document.getElementById('no-results-msg');
@@ -593,7 +608,7 @@
     }
 
     /* ─────────────────────────────────────────
-       RENDERIZAÇÃO
+       RENDERIZAÇÃO DE CATEGORIAS / PRODUTOS
     ───────────────────────────────────────── */
     function renderCategories() {
         const container = document.getElementById('category-tabs');
@@ -611,7 +626,6 @@
                 role:      'tab',
                 ariaSelected: String(isActive)
             });
-            btn.setAttribute('aria-selected', String(isActive));
             btn.onclick = () => {
                 currentCategory = cat;
                 clearSearch();
@@ -621,10 +635,6 @@
             };
             container.appendChild(btn);
         });
-
-        // Espaçador mobile para evitar que o último item fique sob a sombra
-        const spacer = Object.assign(document.createElement('div'), { className: 'shrink-0 w-12 h-1 md:hidden' });
-        container.appendChild(spacer);
     }
 
     function renderProducts() {
@@ -711,7 +721,7 @@
     }
 
     /* ─────────────────────────────────────────
-       AJUSTE 9: Cupom — usa copyToClipboard moderno
+       CUPOM
     ───────────────────────────────────────── */
     let cupomAplicado = false;
 
@@ -726,9 +736,7 @@
         }
 
         confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
+            particleCount: 100, spread: 70, origin: { y: 0.6 },
             colors: ['#0084ff', '#90b05c', '#63336f', '#f2eff0'],
             zIndex: 10000
         });
@@ -738,17 +746,26 @@
     }
 
     /* ─────────────────────────────────────────
-       CARRINHO
+       CARRINHO E LÓGICA DE FORMULÁRIO DE ENTREGA
     ───────────────────────────────────────── */
     let cart = [];
+    let isDelivery = true; // Controle da Aba (Entrega ou Retirada)
     const NUM_WHATSAPP = '553192316707';
 
     const cartSidebar      = document.getElementById('cart-sidebar');
     const cartOverlay      = document.getElementById('cart-overlay');
     const cartItemsEl      = document.getElementById('cart-items');
     const emptyCartMsg     = document.getElementById('empty-cart-msg');
+    const cartContentWrap  = document.getElementById('cart-content-wrapper');
     const checkoutBtn      = document.getElementById('checkout-btn');
     const mobileCartBar    = document.getElementById('mobile-cart-bar');
+    
+    // Elementos do Form e Abas
+    const tabDelivery      = document.getElementById('tab-delivery');
+    const tabPickup        = document.getElementById('tab-pickup');
+    const formDeliveryInfo = document.getElementById('form-delivery-info');
+    const cartUpsell       = document.getElementById('cart-upsell');
+    const upsellItemsEl    = document.getElementById('upsell-items');
 
     function openCart() {
         cartSidebar.classList.remove('translate-x-full');
@@ -769,6 +786,67 @@
     document.getElementById('cart-toggle').addEventListener('click', openCart);
     document.getElementById('close-cart').addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
+
+    // Eventos das Abas (Entrega/Retirada)
+    tabDelivery.addEventListener('click', () => {
+        isDelivery = true;
+        tabDelivery.className = 'flex-1 py-2 text-sm font-bold bg-white text-brandGreen shadow rounded-md transition-all';
+        tabPickup.className = 'flex-1 py-2 text-sm font-bold text-brandSec1 hover:text-brandDark transition-all';
+        formDeliveryInfo.classList.remove('hidden');
+        formDeliveryInfo.classList.add('flex');
+    });
+
+    tabPickup.addEventListener('click', () => {
+        isDelivery = false;
+        tabPickup.className = 'flex-1 py-2 text-sm font-bold bg-white text-brandGreen shadow rounded-md transition-all';
+        tabDelivery.className = 'flex-1 py-2 text-sm font-bold text-brandSec1 hover:text-brandDark transition-all';
+        formDeliveryInfo.classList.add('hidden');
+        formDeliveryInfo.classList.remove('flex');
+    });
+
+    // Função de Upsell (Gerar produtos para levar junto)
+    function renderUpsell() {
+        upsellItemsEl.innerHTML = '';
+        const cartIds = cart.map(item => item.id);
+        
+        // Filtra opções interessantes (Bebidas ou Paletas) que NÃO estão no carrinho
+        const upsellCandidates = PRODUCTS.filter(p => 
+            !cartIds.includes(p.id) && 
+            (p.category === 'Bebidas' || p.category === 'Paletas Mexicanas')
+        );
+
+        if(upsellCandidates.length === 0) {
+            cartUpsell.classList.add('hidden');
+            cartUpsell.classList.remove('flex');
+            return;
+        }
+
+        cartUpsell.classList.remove('hidden');
+        cartUpsell.classList.add('flex');
+
+        // Escolhe 3 aleatórios
+        const selectedUpsells = upsellCandidates.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+        selectedUpsells.forEach(p => {
+            const card = document.createElement('div');
+            card.className = "min-w-[130px] w-[130px] bg-white rounded-lg p-2.5 border border-brandSec1/20 shadow-sm flex flex-col gap-2 shrink-0";
+            card.innerHTML = `
+                <div class="h-20 w-full rounded-md overflow-hidden bg-gray-100 relative">
+                    <img src="${p.img}" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 flex flex-col justify-between">
+                    <p class="text-[11px] font-bold leading-tight text-brandDark line-clamp-2">${p.name}</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-xs font-black text-brandGreen">R$ ${formatBRL(p.price)}</span>
+                        <button onclick="adicionarAoCarrinho(${p.id})" aria-label="Adicionar ${p.name}" class="w-7 h-7 bg-brandBg rounded-full flex items-center justify-center text-brandDark hover:bg-brandGreen hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+            upsellItemsEl.appendChild(card);
+        });
+    }
 
     window.adicionarAoCarrinho = function(productId) {
         const product = PRODUCTS.find(p => p.id === productId);
@@ -793,20 +871,26 @@
         atualizarCarrinhoDOM();
     };
 
-    /* AJUSTE 10: emptyCartMsg gerenciado via classList (sem style.display) */
     function atualizarCarrinhoDOM() {
         cartItemsEl.innerHTML = '';
         let subtotal = 0;
         let qtdItens = 0;
 
         if (cart.length === 0) {
-            emptyCartMsg.classList.remove('hidden');   // ← classList correto
+            emptyCartMsg.classList.remove('hidden');   
+            cartContentWrap.classList.add('hidden');
+            cartContentWrap.classList.remove('flex');
             checkoutBtn.disabled = true;
             mobileCartBar.classList.add('translate-y-full');
         } else {
-            emptyCartMsg.classList.add('hidden');       // ← classList correto
+            emptyCartMsg.classList.add('hidden');       
+            cartContentWrap.classList.remove('hidden');
+            cartContentWrap.classList.add('flex');
             checkoutBtn.disabled = false;
             mobileCartBar.classList.remove('translate-y-full');
+
+            // Renderiza Upsell novo sempre que o carrinho mudar
+            renderUpsell();
 
             cart.forEach((item, index) => {
                 subtotal += item.price * item.quantidade;
@@ -874,14 +958,36 @@
     }
 
     /* ─────────────────────────────────────────
-       AJUSTE 11: Checkout WhatsApp — usa encodeURIComponent
-       Resolve problemas com emojis, acentos e caracteres especiais
+       CHECKOUT COM VALIDAÇÕES
     ───────────────────────────────────────── */
     checkoutBtn.addEventListener('click', () => {
         if (cart.length === 0) return;
 
+        // Validação de Campos
+        const custName = document.getElementById('cust-name').value.trim();
+        if(!custName) return showToast('Por favor, informe seu Nome Completo', 'error');
+
+        let addressText = '';
+        if(isDelivery) {
+            const rua = document.getElementById('cust-street').value.trim();
+            const numero = document.getElementById('cust-number').value.trim();
+            const bairro = document.getElementById('cust-neighborhood').value.trim();
+            const comp = document.getElementById('cust-complement').value.trim();
+
+            if(!rua || !numero || !bairro) return showToast('Preencha Rua, Número e Bairro', 'error');
+            addressText = `*🛵 Entrega em Casa*\nRua: ${rua}, ${numero}\nBairro: ${bairro}${comp ? `\nComplemento/Ref: ${comp}` : ''}`;
+        } else {
+            addressText = `*🚶‍♂️ Retirada na Loja*`;
+        }
+
+        const payment = document.getElementById('cust-payment').value;
+
+        // Montagem da Mensagem
         let subtotal = 0;
-        const linhas = ['Olá! Gostaria de fazer o seguinte pedido:', ''];
+        const linhas = [
+            `Olá! Me chamo ${custName} e gostaria de fazer o seguinte pedido:`, 
+            ''
+        ];
 
         cart.forEach(item => {
             const val = item.price * item.quantidade;
@@ -901,11 +1007,10 @@
         linhas.push(
             `*TOTAL A PAGAR:* R$ ${formatBRL(total)}`,
             '',
-            '💳 *Pagamento via PIX*',
-            'Chave (CNPJ): 57.988.054/0001-24',
-            'Nome: Mestre do Açaí Barreiro LTDA',
+            addressText,
             '',
-            'Por favor, para qual endereço devo solicitar a entrega?'
+            `💳 *Forma de Pagamento:* ${payment}`,
+            payment === 'PIX' ? '\nChave (CNPJ): 57.988.054/0001-24\nNome: Mestre do Açaí Barreiro LTDA' : ''
         );
 
         const url = `https://wa.me/${NUM_WHATSAPP}?text=${encodeURIComponent(linhas.join('\n'))}`;
