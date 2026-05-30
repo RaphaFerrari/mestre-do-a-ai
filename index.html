@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mestre do Açaí Delivery | O Melhor Açaí da Região</title>
-    <meta name="description" content="Peça o melhor açaí da região diretamente para a sua casa. Entrega rápida no Barreiro, Belo Horizonte.">
+    <title>Mestre do Açaí Delivery | Cardápio Digital</title>
+    <meta name="description" content="O melhor açaí da região. Eleito Super Restaurante com mais de 100 mil açaís vendidos. Peça agora!">
     
     <!-- Google Fonts: Poppins (Títulos) e Inter (Textos) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,11 +18,12 @@
             theme: {
                 extend: {
                     colors: {
-                        brandBg: '#f2eff0',     /* Fundo Principal */
-                        brandDark: '#63336f',   /* Textos Principais e Títulos */
-                        brandGreen: '#90b05c',  /* CTAs (Botões) */
-                        brandSec1: '#8b7193',   /* Tons secundários */
+                        brandBg: '#f2eff0',
+                        brandDark: '#63336f',
+                        brandGreen: '#90b05c',
+                        brandSec1: '#8b7193',
                         brandSec2: '#7f548c',
+                        brandBlue: '#0084ff', /* Cor do banner de cupom */
                     },
                     fontFamily: {
                         poppins: ['Poppins', 'sans-serif'],
@@ -33,462 +34,474 @@
         }
     </script>
 
-    <!-- Estilos Personalizados Adicionais -->
     <style>
-        body {
-            background-color: #f2eff0;
-            color: #63336f;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-        h1, h2, h3, h4, h5, h6, .font-poppins {
-            font-family: 'Poppins', sans-serif;
-        }
+        body { background-color: #f2eff0; color: #63336f; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6, .font-poppins { font-family: 'Poppins', sans-serif; }
         
-        /* Personalização da barra de scroll */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f2eff0;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #8b7193;
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #63336f;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f2eff0; }
+        ::-webkit-scrollbar-thumb { background: #8b7193; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #63336f; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Categorias do Menu Scroll Horizontal */
+        .category-scroll {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Utilidade para esconder barra de scroll no carrinho */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        /* Animação do Toast */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px) translateX(-50%); }
+            to { opacity: 1; transform: translateY(0) translateX(-50%); }
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .toast-enter { animation: slideUpFade 0.4s ease forwards; }
     </style>
 </head>
-<body class="antialiased selection:bg-brandGreen selection:text-white">
+<body class="antialiased selection:bg-brandGreen selection:text-white pb-24 md:pb-0">
 
-    <!-- CABEÇALHO (Navbar Glassmorphism) -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-brandBg/80 backdrop-blur-md border-b border-brandSec1/20 transition-all duration-300" id="navbar">
+    <!-- TOAST NOTIFICATION (Mensagens) -->
+    <div id="toast-container" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-[110] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- CABEÇALHO -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-brandBg/90 backdrop-blur-md border-b border-brandSec1/20 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logótipo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <!-- INSERIR IMAGEM REAL AQUI: O ficheiro logo.png deve estar na mesma pasta -->
                     <img src="logo.png" alt="Mestre do Açaí Logo" class="h-16 w-auto object-contain" onerror="this.src='https://placehold.co/150x60/63336f/f2eff0?text=Mestre+do+Acai'">
                 </div>
 
-                <!-- Links de Navegação (Desktop) -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#inicio" class="text-brandDark font-medium hover:text-brandGreen transition-colors duration-200">Início</a>
-                    <a href="#produtos" class="text-brandDark font-medium hover:text-brandGreen transition-colors duration-200">Cardápio</a>
-                    <a href="#como-funciona" class="text-brandDark font-medium hover:text-brandGreen transition-colors duration-200">Como Funciona</a>
+                <!-- Links Desktop -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#inicio" class="text-brandDark font-medium hover:text-brandGreen transition-colors">Início</a>
+                    <a href="#cardapio" class="text-brandDark font-medium hover:text-brandGreen transition-colors">Cardápio</a>
+                    <a href="https://www.instagram.com/mestredoacai1/" target="_blank" class="text-brandDark hover:text-brandBlue transition-colors flex items-center gap-1">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        @mestredoacai1
+                    </a>
                 </nav>
 
-                <!-- Ícones (Carrinho & Menu Mobile) -->
-                <div class="flex items-center space-x-6">
-                    <button id="cart-toggle" class="relative p-2 text-brandDark hover:text-brandGreen transition-colors duration-200" aria-label="Abrir carrinho">
-                        <!-- Ícone de Carrinho (SVG) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- Ícones -->
+                <div class="flex items-center space-x-4">
+                    <button id="cart-toggle" class="relative p-2 text-brandDark hover:text-brandGreen transition-colors bg-white rounded-full shadow-sm border border-brandSec1/10" aria-label="Abrir carrinho">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
-                        <!-- Contador dinâmico do carrinho -->
-                        <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-brandGreen rounded-full">0</span>
-                    </button>
-
-                    <!-- Hamburger Menu (Mobile) -->
-                    <button class="md:hidden p-2 text-brandDark focus:outline-none" id="mobile-menu-btn" aria-label="Menu principal">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+                        <span id="cart-count" class="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-brandGreen rounded-full border-2 border-brandBg">0</span>
                     </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <!-- HERO SECTION (Com Prova Social e Banner) -->
+    <section id="inicio" class="pt-28 pb-12 lg:pt-36 lg:pb-20 overflow-hidden relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <!-- Texto da Hero -->
-                <div class="max-w-2xl">
-                    <h1 class="hero-anim font-poppins text-5xl lg:text-7xl font-extrabold text-brandDark leading-tight mb-6">
-                        Açaí do jeito que <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandDark to-brandSec2">você ama.</span>
+            <div class="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-10 items-center">
+                
+                <!-- Texto e Prova Social -->
+                <div class="w-full text-center lg:text-left mt-8 lg:mt-0">
+                    <div class="hero-anim inline-flex flex-wrap justify-center lg:justify-start gap-2 mb-6">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+                            ⭐ Eleito Super Restaurante
+                        </span>
+                        <span class="bg-brandSec1/10 text-brandDark text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1">
+                            🛵 + de 100 mil vendidos
+                        </span>
+                    </div>
+
+                    <h1 class="hero-anim font-poppins text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brandDark leading-tight mb-4">
+                        O Verdadeiro <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandDark to-brandSec2">Mestre do Açaí.</span>
                     </h1>
-                    <p class="hero-anim text-lg lg:text-xl text-brandSec1 mb-10 font-inter">
-                        O melhor açaí do Barreiro entregue diretamente na sua porta. Monte o seu copo com centenas de combinações frescas e deliciosas.
-                    </p>
-                    <div class="hero-anim flex flex-col sm:flex-row gap-4">
-                        <a href="#produtos" class="inline-flex justify-center items-center px-8 py-4 text-base font-bold text-white bg-brandGreen rounded-full hover:bg-[#7a994b] hover:-translate-y-1 transition-all duration-300 shadow-lg shadow-brandGreen/30">
-                            Fazer Pedido Agora
-                        </a>
-                    </div>
                     
-                    <!-- Prova Social Simples -->
-                    <div class="hero-anim mt-10 flex items-center gap-4">
-                        <div class="flex -space-x-3">
-                            <img class="w-10 h-10 rounded-full border-2 border-brandBg" src="https://i.pravatar.cc/100?img=1" alt="Cliente">
-                            <img class="w-10 h-10 rounded-full border-2 border-brandBg" src="https://i.pravatar.cc/100?img=2" alt="Cliente">
-                            <img class="w-10 h-10 rounded-full border-2 border-brandBg" src="https://i.pravatar.cc/100?img=3" alt="Cliente">
-                        </div>
-                        <p class="text-sm font-medium text-brandSec1">Mais de <strong class="text-brandDark">1.000 pedidos</strong> entregues no Barreiro.</p>
+                    <ul class="hero-anim text-sm sm:text-base text-brandSec1 mb-8 space-y-2 font-medium flex flex-col items-center lg:items-start">
+                        <li class="flex items-center gap-2"><span class="text-xl">⏰</span> 14:00 às 22:00 (Dom a Sex)</li>
+                        <li class="flex items-center gap-2"><span class="text-xl">🏡</span> Barreiro | Vista Alegre | Califórnia</li>
+                        <li class="flex items-center gap-2 text-brandGreen font-bold"><span class="text-xl">👇</span> Faça já o seu pedido #Sejaummestre</li>
+                    </ul>
+
+                    <!-- BANNER DE CUPOM (Interativo) -->
+                    <div class="hero-anim w-full max-w-md mx-auto lg:mx-0">
+                        <button onclick="aplicarCupom()" class="w-full relative overflow-hidden bg-gradient-to-r from-[#007bf5] to-[#00aaff] rounded-2xl shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 text-left group">
+                            <!-- Efeito de brilho -->
+                            <div class="absolute inset-0 w-1/4 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+                            
+                            <div class="flex items-center p-4 sm:p-5 h-full">
+                                <!-- Ícone Tag -->
+                                <div class="bg-yellow-400 p-3 rounded-xl flex-shrink-0 mr-4 shadow-inner">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
+                                </div>
+                                <!-- Texto Desconto -->
+                                <div class="border-r border-white/20 pr-4 mr-4 text-white">
+                                    <p class="text-sm sm:text-base font-semibold leading-tight">Desconto de</p>
+                                    <p class="text-2xl sm:text-3xl font-black font-poppins leading-none">10%</p>
+                                    <p class="text-xs sm:text-sm mt-1 opacity-90">em itens</p>
+                                </div>
+                                <!-- Cupom e Ação -->
+                                <div class="flex flex-col items-center flex-1">
+                                    <span class="text-white/90 text-xs mb-1">Use o cupom:</span>
+                                    <div class="bg-black/20 backdrop-blur-sm px-4 py-1.5 rounded-lg border border-white/10 w-full text-center">
+                                        <span class="text-white font-black tracking-wider text-sm sm:text-lg">MESTRE10</span>
+                                    </div>
+                                    <span class="text-white/80 text-[10px] sm:text-xs mt-1.5 text-center">Clique p/ copiar e aplicar (Mín. R$ 23)</span>
+                                </div>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Imagem da Hero (Parallax subtil) -->
-                <div class="hero-img-anim relative w-full h-[400px] lg:h-[600px] rounded-[3rem] overflow-hidden shadow-2xl shadow-brandDark/20 group">
-                    <div class="absolute inset-0 bg-brandDark/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-                    <!-- IMAGEM PLACEHOLDER: Substituir pelo URL da sua melhor foto de Açaí -->
-                    <img src="https://images.unsplash.com/photo-1590165482155-a5d5a395ceb4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Copo de Açaí Premium" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                <!-- Imagem -->
+                <div class="hero-img-anim relative w-full h-[300px] sm:h-[400px] lg:h-[500px] rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl shadow-brandDark/20 group">
+                    <img src="https://images.unsplash.com/photo-1590165482155-a5d5a395ceb4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Copo de Açaí" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                 </div>
             </div>
         </div>
-        
-        <!-- Elemento de Fundo Decorativo -->
-        <div class="absolute top-0 right-0 -mr-48 -mt-48 w-96 h-96 rounded-full bg-brandSec1/10 blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 -ml-48 -mb-48 w-[40rem] h-[40rem] rounded-full bg-brandDark/5 blur-3xl"></div>
     </section>
 
-    <!-- MONTRA DE PRODUTOS (E-commerce Grid) -->
-    <section id="produtos" class="py-24 bg-white relative">
+    <!-- CARDÁPIO DIGITAL INTEGRADO -->
+    <section id="cardapio" class="py-16 bg-white min-h-screen border-t-2 border-brandBg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-brandGreen font-bold tracking-wider uppercase text-sm mb-2 section-title-anim">O Nosso Cardápio</h2>
-                <h3 class="text-4xl font-poppins font-bold text-brandDark section-title-anim">Escolha o seu tamanho favorito</h3>
+            <div class="text-center mb-10">
+                <h2 class="text-brandGreen font-bold tracking-wider uppercase text-sm mb-2 section-title-anim">Faça o seu pedido</h2>
+                <h3 class="text-3xl font-poppins font-bold text-brandDark section-title-anim">O Nosso Cardápio Completo</h3>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- Navegação de Categorias (Filtros) -->
+            <div class="relative mb-12">
+                <div id="category-tabs" class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 snap-x border-b border-brandBg">
+                    <!-- Categorias renderizadas via JS -->
+                </div>
+                <!-- Sombra indicadora de scroll p/ mobile -->
+                <div class="absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden"></div>
+            </div>
+
+            <!-- Grid de Produtos -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Produtos renderizados via JS -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- RODAPÉ -->
+    <footer class="bg-brandDark text-brandBg pt-12 pb-24 md:pb-8 border-t-[8px] border-brandGreen mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                 
-                <!-- Produto 1 -->
-                <div class="product-card bg-brandBg rounded-3xl p-6 border border-brandSec1/10 hover:-translate-y-2 hover:shadow-xl hover:shadow-brandDark/10 transition-all duration-300 flex flex-col h-full">
-                    <div class="relative h-64 rounded-2xl overflow-hidden mb-6">
-                        <!-- IMAGEM DO PRODUTO: Substituir imagem -->
-                        <img src="https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Açaí Clássico 300ml" class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-xl font-bold font-poppins text-brandDark">Açaí Clássico 300ml</h4>
-                            <span class="text-lg font-bold text-brandGreen">R$ 15,90</span>
-                        </div>
-                        <p class="text-brandSec2 text-sm mb-6">Perfeito para quem quer uma dose rápida de energia. Acompanha 2 complementos tradicionais grátis.</p>
-                    </div>
-                    <button onclick="adicionarAoCarrinho('Açaí Clássico 300ml', 15.90)" class="w-full py-3 px-4 bg-brandDark text-white font-semibold rounded-xl hover:bg-brandSec2 transition-colors duration-300 flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                        Adicionar
-                    </button>
-                </div>
-
-                <!-- Produto 2 -->
-                <div class="product-card bg-brandBg rounded-3xl p-6 border-2 border-brandGreen relative hover:-translate-y-2 hover:shadow-xl hover:shadow-brandDark/10 transition-all duration-300 flex flex-col h-full">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brandGreen text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide z-10 shadow-md">
-                        Mais Pedido
-                    </div>
-                    <div class="relative h-64 rounded-2xl overflow-hidden mb-6 mt-2">
-                        <!-- IMAGEM DO PRODUTO: Substituir imagem -->
-                        <img src="https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Copo Turbinado 500ml" class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-xl font-bold font-poppins text-brandDark">Copo Turbinado 500ml</h4>
-                            <span class="text-lg font-bold text-brandGreen">R$ 22,90</span>
-                        </div>
-                        <p class="text-brandSec2 text-sm mb-6">O tamanho ideal da fome. Permite até 4 complementos e 1 creme especial à sua escolha.</p>
-                    </div>
-                    <button onclick="adicionarAoCarrinho('Copo Turbinado 500ml', 22.90)" class="w-full py-3 px-4 bg-brandGreen text-white font-semibold rounded-xl hover:bg-[#7a994b] transition-colors duration-300 flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                        Adicionar
-                    </button>
-                </div>
-
-                <!-- Produto 3 -->
-                <div class="product-card bg-brandBg rounded-3xl p-6 border border-brandSec1/10 hover:-translate-y-2 hover:shadow-xl hover:shadow-brandDark/10 transition-all duration-300 flex flex-col h-full">
-                    <div class="relative h-64 rounded-2xl overflow-hidden mb-6">
-                        <!-- IMAGEM DO PRODUTO: Substituir imagem -->
-                        <img src="https://images.unsplash.com/photo-1555310635-430983ee594b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Barca de Açaí Premium" class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="text-xl font-bold font-poppins text-brandDark">Barca Premium 1 Litro</h4>
-                            <span class="text-lg font-bold text-brandGreen">R$ 45,00</span>
-                        </div>
-                        <p class="text-brandSec2 text-sm mb-6">Para partilhar (ou não!). Açaí generoso com direito a 6 complementos e frutas frescas fatiadas.</p>
-                    </div>
-                    <button onclick="adicionarAoCarrinho('Barca Premium 1 Litro', 45.00)" class="w-full py-3 px-4 bg-brandDark text-white font-semibold rounded-xl hover:bg-brandSec2 transition-colors duration-300 flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                        Adicionar
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- COMO FUNCIONA (Passos) -->
-    <section id="como-funciona" class="py-24 bg-brandBg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-brandDark font-poppins text-3xl md:text-4xl font-bold section-title-anim">O seu pedido a 3 passos de distância</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-                <!-- Linha conectora (visível apenas em desktop) -->
-                <div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-brandSec1/30 z-0"></div>
-
-                <!-- Passo 1 -->
-                <div class="step-card relative z-10 flex flex-col items-center text-center">
-                    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center border-4 border-brandDark shadow-lg mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brandGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </div>
-                    <h4 class="text-xl font-bold text-brandDark mb-2">1. Escolha</h4>
-                    <p class="text-brandSec2">Selecione o tamanho do seu copo, taça ou barca.</p>
-                </div>
-
-                <!-- Passo 2 -->
-                <div class="step-card relative z-10 flex flex-col items-center text-center">
-                    <div class="w-24 h-24 bg-brandDark rounded-full flex items-center justify-center border-4 border-white shadow-lg mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                        </svg>
-                    </div>
-                    <h4 class="text-xl font-bold text-brandDark mb-2">2. Personalize</h4>
-                    <p class="text-brandSec2">Adicione frutas, cremes, caldas e complementos ao seu gosto.</p>
-                </div>
-
-                <!-- Passo 3 -->
-                <div class="step-card relative z-10 flex flex-col items-center text-center">
-                    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center border-4 border-brandGreen shadow-lg mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brandGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </div>
-                    <h4 class="text-xl font-bold text-brandDark mb-2">3. Receba rápido</h4>
-                    <p class="text-brandSec2">Aguarde confortavelmente. Nós entregamos bem gelado à sua porta.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- RODAPÉ (Footer) -->
-    <footer class="bg-brandDark text-brandBg pt-16 pb-8 border-t-[10px] border-brandGreen">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-                
-                <!-- Coluna 1: Marca -->
+                <!-- Info -->
                 <div>
-                    <h3 class="font-poppins text-2xl font-bold mb-4 text-brandBg">Mestre do Açaí</h3>
-                    <p class="text-brandSec1 text-sm leading-relaxed mb-6">
-                        A nossa missão é entregar a melhor experiência em açaí do Barreiro, com ingredientes selecionados e entrega extremamente rápida.
+                    <h3 class="font-poppins text-xl font-bold mb-4">Mestre do Açaí</h3>
+                    <p class="text-brandSec1 text-sm leading-relaxed mb-4">
+                        O melhor açaí da região. Eleito Super Restaurante. #Sejaummestre
                     </p>
+                    <a href="https://www.instagram.com/mestredoacai1/" target="_blank" class="inline-flex items-center gap-2 text-brandGreen hover:text-white transition-colors bg-brandSec2/20 px-3 py-2 rounded-lg font-medium text-sm">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        @mestredoacai1
+                    </a>
                 </div>
 
-                <!-- Coluna 2: Horário -->
+                <!-- Delivery Info -->
                 <div>
-                    <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Horário de Funcionamento</h4>
+                    <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Informações</h4>
                     <ul class="text-sm text-brandBg space-y-2">
-                        <li class="flex justify-between border-b border-brandSec1/30 pb-2">
-                            <span>Domingo a Sexta-feira</span>
-                            <span class="font-semibold text-brandGreen">14:00 - 22:00</span>
-                        </li>
-                        <li class="flex justify-between pt-1">
-                            <span>Sábado</span>
-                            <span class="font-semibold text-brandSec1">Encerrado</span>
+                        <li class="flex items-center gap-2"><span class="text-brandSec1">⏰</span> 14:00 - 22:00 (Dom a Sex)</li>
+                        <li class="flex items-start gap-2 mt-2">
+                            <span class="text-brandSec1">🏡</span> 
+                            <span>Áreas de Entrega:<br> Barreiro, Vista Alegre, Califórnia</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Coluna 3: Contactos -->
+                <!-- PIX Oficial -->
                 <div>
-                    <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Contacte-nos</h4>
-                    <ul class="text-sm text-brandBg space-y-4">
-                        <li class="flex items-start gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brandGreen flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                            <span>Av. Sinfrônio Brochado, 1268 - Barreiro, Belo Horizonte - MG, 30640-000, Brasil</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brandGreen flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                            <a href="https://wa.me/553192316707" target="_blank" class="hover:text-brandGreen transition-colors">31 9231-6707</a>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brandGreen flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                            <a href="mailto:mestredoacaibarreiro@gmail.com" class="hover:text-brandGreen transition-colors break-all">mestredoacaibarreiro@gmail.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Coluna 4: Links -->
-                <div>
-                    <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Links Rápidos</h4>
-                    <ul class="text-sm text-brandBg space-y-2 flex flex-col">
-                        <a href="#inicio" class="hover:text-brandGreen transition-colors w-fit">Início</a>
-                        <a href="#produtos" class="hover:text-brandGreen transition-colors w-fit">Ver Cardápio</a>
-                        <a href="#como-funciona" class="hover:text-brandGreen transition-colors w-fit">Dúvidas Frequentes</a>
-                    </ul>
+                    <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Pagamento via PIX</h4>
+                    <div class="bg-brandBg text-brandDark p-3 rounded-lg inline-block border border-brandSec1/30">
+                        <p class="text-xs font-bold mb-1">Mestre do Açaí Barreiro LTDA</p>
+                        <p class="font-mono text-sm font-bold bg-white p-1 rounded text-center border border-gray-200">57.988.054/0001-24</p>
+                    </div>
                 </div>
             </div>
             
-            <div class="pt-8 border-t border-brandSec2/40 text-center flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-xs text-brandSec1">&copy; 2024 Mestre do Açaí Delivery. Todos os direitos reservados.</p>
-                <div class="flex gap-4">
-                    <!-- Redes Sociais genéricas (apenas UI) -->
-                    <a href="#" class="w-8 h-8 rounded-full bg-brandSec2 flex items-center justify-center hover:bg-brandGreen transition-colors">
-                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
-                    </a>
-                    <a href="#" class="w-8 h-8 rounded-full bg-brandSec2 flex items-center justify-center hover:bg-brandGreen transition-colors">
-                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
-                    </a>
-                </div>
+            <div class="pt-6 border-t border-brandSec2/40 text-center flex flex-col sm:flex-row justify-between items-center gap-2">
+                <p class="text-xs text-brandSec1">&copy; 2024 Mestre do Açaí. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
-    <a href="https://wa.me/553192316707?text=Olá,%20gostaria%20de%20fazer%20um%20pedido%20de%20Açaí!" target="_blank" rel="noopener noreferrer" 
-       class="fixed bottom-6 right-6 z-[60] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 flex items-center justify-center"
-       aria-label="Contactar pelo WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-    </a>
+    <!-- CARRINHO FLUTUANTE INFERIOR MOBILE -->
+    <div id="mobile-cart-bar" class="md:hidden fixed bottom-0 left-0 w-full bg-brandDark text-white p-4 flex justify-between items-center z-[80] shadow-[0_-10px_30px_rgba(0,0,0,0.2)] transform translate-y-full transition-transform duration-300">
+        <div class="flex flex-col">
+            <span class="text-xs font-semibold text-brandSec1">Total Pedido</span>
+            <span id="mobile-cart-total" class="font-bold text-lg text-brandGreen">R$ 0,00</span>
+        </div>
+        <button onclick="openCart()" class="bg-brandGreen text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-brandGreen/40">
+            Ver Carrinho
+            <span id="mobile-cart-badge" class="bg-white text-brandDark w-6 h-6 rounded-full flex items-center justify-center text-xs">0</span>
+        </button>
+    </div>
 
-    <!-- PAINEL LATERAL DO CARRINHO (Escondido por padrão) -->
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-[100] transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
+    <!-- SIDEBAR DO CARRINHO (Desktop / Aberto) -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-brandBg z-[100] transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
         <!-- Cabeçalho Carrinho -->
-        <div class="p-6 bg-brandDark text-white flex justify-between items-center">
-            <h3 class="text-xl font-bold font-poppins">O Seu Pedido</h3>
-            <button id="close-cart" class="text-brandBg hover:text-brandGreen transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        <div class="p-6 bg-brandDark text-white flex justify-between items-center shadow-md z-10">
+            <h3 class="text-xl font-bold font-poppins flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brandGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                O Seu Pedido
+            </h3>
+            <button id="close-cart" class="text-brandSec1 hover:text-white bg-white/10 p-2 rounded-full transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>
         
+        <!-- Alerta de Cupom no Carrinho -->
+        <div id="cart-coupon-alert" class="hidden bg-brandBlue/10 text-brandBlue px-4 py-3 text-sm font-semibold border-b border-brandBlue/20 flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></path></svg>
+            Cupom MESTRE10 aplicado!
+        </div>
+
         <!-- Itens do Carrinho -->
-        <div id="cart-items" class="flex-grow p-6 overflow-y-auto no-scrollbar flex flex-col gap-4">
-            <div class="text-center text-brandSec1 mt-10" id="empty-cart-msg">
-                O seu carrinho está vazio.<br>Que tal um açaí agora?
+        <div id="cart-items" class="flex-grow p-4 sm:p-6 overflow-y-auto no-scrollbar flex flex-col gap-3">
+            <div class="text-center text-brandSec1 mt-10 flex flex-col items-center" id="empty-cart-msg">
+                <div class="bg-white p-4 rounded-full mb-4 shadow-sm border border-brandSec1/20"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brandSec2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div>
+                <p class="font-medium text-lg">O seu carrinho está vazio.</p>
+                <p class="text-sm mt-1">Navegue pelo cardápio e adicione as suas delícias.</p>
             </div>
             <!-- Os itens serão injetados aqui via JS -->
         </div>
 
-        <!-- Rodapé Carrinho -->
-        <div class="p-6 border-t border-brandBg bg-[#faf9fa]">
-            <div class="flex justify-between items-center mb-6">
-                <span class="font-bold text-brandDark">Total:</span>
-                <span id="cart-total" class="text-2xl font-bold text-brandGreen">R$ 0,00</span>
+        <!-- Rodapé Carrinho (Resumo de Valores) -->
+        <div class="p-6 bg-white rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-10 border-t border-brandSec1/10">
+            <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm text-brandDark font-medium">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">R$ 0,00</span>
+                </div>
+                <!-- Linha de Desconto (Escondida por padrão) -->
+                <div id="cart-discount-row" class="hidden flex justify-between text-sm text-brandBlue font-bold">
+                    <span>Desconto (10%):</span>
+                    <span id="cart-discount-val">- R$ 0,00</span>
+                </div>
+                <div id="min-order-warning" class="hidden text-xs text-red-500 font-medium bg-red-50 p-2 rounded border border-red-100 mt-1">
+                    Faltam R$ <span id="val-falta">0,00</span> para o desconto do cupom ser ativado (Mín R$23).
+                </div>
+                <div class="border-t border-dashed border-brandSec1/30 pt-2 flex justify-between items-center mt-2">
+                    <span class="font-bold text-brandDark text-lg">Total:</span>
+                    <span id="cart-total" class="text-2xl font-black text-brandGreen">R$ 0,00</span>
+                </div>
             </div>
-            <button id="checkout-btn" class="w-full py-4 bg-brandGreen text-white font-bold rounded-xl hover:bg-[#7a994b] transition-colors shadow-lg shadow-brandGreen/20 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                Finalizar no WhatsApp
+            
+            <button id="checkout-btn" class="w-full py-4 bg-brandGreen text-white font-bold rounded-xl hover:bg-[#7a994b] transition-colors shadow-lg shadow-brandGreen/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Pedir no WhatsApp
             </button>
+            <p class="text-center text-[10px] text-brandSec1 mt-3">PIX Oficial: 57.988.054/0001-24</p>
         </div>
     </div>
     
     <!-- Overlay Escuro do Carrinho -->
     <div id="cart-overlay" class="fixed inset-0 bg-brandDark/50 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-500"></div>
 
+    <style>
+        @keyframes shimmer { 100% { transform: translateX(400%); } }
+    </style>
 
-    <!-- GSAP & SCROLLTRIGGER Scripts -->
+    <!-- GSAP & Lógica JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
-    <!-- Lógica Principal -->
     <script>
-        // 1. ANIMAÇÕES GSAP (Estilo Awwwards)
-        gsap.registerPlugin(ScrollTrigger);
+        /* =========================================
+           DADOS DO CARDÁPIO (Baseado nas Imagens/Texto)
+        ========================================= */
+        const PRODUCTS = [
+            // MAIS VENDIDOS
+            { id: 101, category: "Mais Vendidos", name: "Mix Açaí NinhoTella", desc: "Açaí + leite em pó + morango + Nutella + creme de Ninho", price: 30.00, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: true },
+            { id: 102, category: "Mais Vendidos", name: "Creme de Açaí 500 ml", desc: "Creme + 3 Complementos", price: 30.00, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false },
+            { id: 103, category: "Mais Vendidos", name: "Creme de Açaí 355 ml", desc: "Creme + 3 Complementos", price: 25.00, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
+            { id: 104, category: "Mais Vendidos", name: "Açaí no Copo 500 ml", desc: "Inclui: 3 complementos comuns + 1 especial", price: 30.00, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
+            { id: 105, category: "Mais Vendidos", name: "Açaí Ninho Trufado 1 Litro", desc: "Produto Destaque da Casa", price: 47.00, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true },
+            
+            // MIXES ESPECIAIS
+            { id: 201, category: "Mixes Especiais", name: "Mix Açaí com Leite em Pó", desc: "Açaí com 2 camadas de leite em pó", price: 25.00, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
+            { id: 202, category: "Mixes Especiais", name: "Açaí + Leite em Pó + Condensado", desc: "Clássico Irresistível", price: 25.00, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
+            { id: 203, category: "Mixes Especiais", name: "Açaí + Ninho + Condensado + Morango", desc: "Toque de frutas frescas", price: 28.00, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+            { id: 204, category: "Mixes Especiais", name: "Mix Maracujá com Nutella", desc: "Açaí + Nutella + creme de maracujá + leite em pó + maracujá", price: 32.00, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true },
+            { id: 205, category: "Mixes Especiais", name: "Mix Açaí Morango", desc: "Açaí + leite em pó + morango + Bis + creme de morango", price: 30.00, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+            { id: 206, category: "Mixes Especiais", name: "Mix Açaí Morango & Avelã", desc: "Açaí + leite em pó + creme morango + Sonho de Valsa + creme avelã", price: 35.00, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: true },
+            
+            // AÇAÍ NO COPO
+            { id: 301, category: "Açaí no Copo", name: "Açaí no Copo 300 ml", desc: "3 complementos comuns + 1 especial", price: 25.00, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
+            { id: 302, category: "Açaí no Copo", name: "Açaí no Copo 500 ml", desc: "3 complementos comuns + 1 especial", price: 30.00, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+            { id: 303, category: "Açaí no Copo", name: "Açaí no Copo 710 ml", desc: "3 complementos comuns + 1 especial", price: 35.00, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true },
 
-        // Animação de Entrada - Hero Section
-        const tl = gsap.timeline();
-        tl.from(".hero-anim", {
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.15,
-            ease: "power3.out",
-            delay: 0.2
-        })
-        .from(".hero-img-anim", {
-            scale: 0.9,
-            opacity: 0,
-            duration: 1.2,
-            ease: "power2.out",
-        }, "-=0.8");
+            // CREME DE AÇAÍ
+            { id: 401, category: "Creme de Açaí", name: "Creme de Açaí 355 ml", desc: "Acompanha 3 complementos", price: 25.00, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
+            { id: 402, category: "Creme de Açaí", name: "Creme de Açaí 500 ml", desc: "Acompanha 3 complementos", price: 30.00, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+            { id: 403, category: "Creme de Açaí", name: "Creme de Açaí 700 ml", desc: "Acompanha 3 complementos", price: 35.00, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false },
+            { id: 404, category: "Creme de Açaí", name: "Creme de Açaí 1 Litro", desc: "Acompanha 3 complementos", price: 42.00, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true },
+            { id: 405, category: "Creme de Açaí", name: "Creme Zero Açúcar 1L", desc: "Acompanha 3 complementos (Zero)", price: 49.00, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
+            { id: 406, category: "Creme de Açaí", name: "Opção Pura", desc: "Açaí com Leite em Pó + Condensado + Banana + Granola", price: 28.00, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
 
-        // Animação Scroll - Títulos das Secções
-        gsap.utils.toArray('.section-title-anim').forEach(title => {
-            gsap.from(title, {
-                scrollTrigger: {
-                    trigger: title,
-                    start: "top 85%",
-                },
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                ease: "power3.out"
+            // SORVETE GOURMET
+            { id: 501, category: "Sorvete Gourmet", name: "Sorvete 300 ml", desc: "2 sabores + 3 adicionais + 1 cobertura", price: 25.00, img: "https://images.unsplash.com/photo-1570197781417-0a823758030d?w=500&q=80", isHighlight: false },
+            { id: 502, category: "Sorvete Gourmet", name: "Sorvete 500 ml", desc: "2 sabores + 3 adicionais + 1 cobertura", price: 30.00, img: "https://images.unsplash.com/photo-1558223616-2c700e408ec2?w=500&q=80", isHighlight: false },
+            { id: 503, category: "Sorvete Gourmet", name: "Sorvete 710 ml", desc: "2 sabores + 3 adicionais + 1 cobertura", price: 35.00, img: "https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?w=500&q=80", isHighlight: true },
+
+            // VITAMINAS
+            { id: 601, category: "Vitaminas", name: "Vitamina de Açaí 300 ml", desc: "Inclui 1 adicional comum", price: 17.00, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
+            { id: 602, category: "Vitaminas", name: "Vitamina de Açaí 500 ml", desc: "Inclui 1 adicional comum", price: 22.00, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
+            { id: 603, category: "Vitaminas", name: "Vitamina de Açaí 700 ml", desc: "Inclui 1 adicional comum", price: 27.00, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
+
+            // PALETAS
+            { id: 701, category: "Paletas Mexicanas", name: "Paleta Rafaello", desc: "Picolé recheado artesanal", price: 12.00, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: false },
+            { id: 702, category: "Paletas Mexicanas", name: "Paleta Ferrero Rocher", desc: "Picolé recheado artesanal", price: 12.00, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: false },
+            { id: 703, category: "Paletas Mexicanas", name: "Paleta Morango com Nutella", desc: "Clássica irresistível", price: 12.00, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: true },
+
+            // BEBIDAS
+            { id: 801, category: "Bebidas", name: "Água 500 ml / com Gás", desc: "Garrafa Plástica", price: 4.00, img: "https://images.unsplash.com/photo-1616118132534-381148898bb4?w=500&q=80", isHighlight: false },
+            { id: 802, category: "Bebidas", name: "Refrigerantes Lata (Vários)", desc: "Coca, Fanta, Sprite, Schweppes", price: 6.00, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&q=80", isHighlight: false },
+            { id: 803, category: "Bebidas", name: "Red Bull", desc: "Lata 250ml", price: 12.00, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&q=80", isHighlight: false },
+            { id: 804, category: "Bebidas", name: "Heineken 330 ml", desc: "Long Neck", price: 9.00, img: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=500&q=80", isHighlight: false },
+        ];
+
+        const CATEGORIES = [...new Set(PRODUCTS.map(p => p.category))];
+        let currentCategory = "Mais Vendidos";
+
+        /* =========================================
+           RENDERIZAÇÃO DA INTERFACE DO CARDÁPIO
+        ========================================= */
+        function renderCategories() {
+            const container = document.getElementById('category-tabs');
+            container.innerHTML = '';
+            
+            CATEGORIES.forEach(cat => {
+                const btn = document.createElement('button');
+                const isActive = cat === currentCategory;
+                btn.className = `whitespace-nowrap px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 ${isActive ? 'bg-brandDark text-white shadow-md scale-105' : 'bg-white text-brandSec1 border border-brandBg hover:bg-brandBg hover:text-brandDark'}`;
+                btn.innerText = cat;
+                btn.onclick = () => {
+                    currentCategory = cat;
+                    renderCategories();
+                    renderProducts();
+                    // Scroll suave para o grid
+                    document.getElementById('cardapio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                };
+                container.appendChild(btn);
             });
-        });
+        }
 
-        // Animação Scroll - Cartões de Produto (Stagger)
-        gsap.from(".product-card", {
-            scrollTrigger: {
-                trigger: "#produtos",
-                start: "top 70%",
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "power3.out"
-        });
+        function renderProducts() {
+            const container = document.getElementById('products-grid');
+            container.innerHTML = '';
+            
+            const filteredProducts = PRODUCTS.filter(p => p.category === currentCategory);
+            
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-4 border border-brandBg hover:border-brandSec1/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group relative";
+                
+                let highlightTag = product.isHighlight ? `<div class="absolute top-2 left-2 z-10 bg-brandGreen text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">Destaque</div>` : '';
 
-        // Animação Scroll - Passos (Stagger)
-        gsap.from(".step-card", {
-            scrollTrigger: {
-                trigger: "#como-funciona",
-                start: "top 75%",
-            },
-            y: 40,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "back.out(1.7)"
-        });
+                card.innerHTML = `
+                    ${highlightTag}
+                    <div class="relative h-48 sm:h-56 rounded-xl overflow-hidden mb-4 bg-gray-100">
+                        <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-lg font-bold font-poppins text-brandDark leading-tight mb-1">${product.name}</h4>
+                            <p class="text-brandSec2 text-xs leading-relaxed mb-4">${product.desc}</p>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto">
+                            <span class="text-xl font-black text-brandGreen font-poppins">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                            <button onclick="adicionarAoCarrinho(${product.id})" class="w-10 h-10 bg-brandBg rounded-full flex items-center justify-center text-brandDark hover:bg-brandDark hover:text-white transition-colors duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            
+            // Re-aplicar animação GSAP rápida ao trocar aba
+            gsap.fromTo("#products-grid > div", {y: 20, opacity: 0}, {y: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: "power2.out"});
+        }
 
-        // Efeito de sombra/blur na Navbar ao fazer scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 20) {
-                nav.classList.add('shadow-md');
-            } else {
-                nav.classList.remove('shadow-md');
+        // Inicializar renderização
+        renderCategories();
+        renderProducts();
+
+        /* =========================================
+           SISTEMA DE TOAST NOTIFICATION
+        ========================================= */
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const isSuccess = type === 'success';
+            
+            toast.className = `toast-enter flex items-center gap-3 px-5 py-3 rounded-xl shadow-2xl text-white font-medium text-sm border border-white/20 ${isSuccess ? 'bg-brandDark' : 'bg-red-500'}`;
+            
+            const icon = isSuccess 
+                ? `<svg class="w-5 h-5 text-brandGreen" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`
+                : `<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                
+            toast.innerHTML = `${icon} <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px) translateX(-50%)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        /* =========================================
+           LÓGICA DE CUPOM
+        ========================================= */
+        let cupomAplicado = false;
+        
+        function aplicarCupom() {
+            // Copiar p/ área de transferência
+            const tempInput = document.createElement('textarea');
+            tempInput.value = 'MESTRE10';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Estado e UI
+            if(!cupomAplicado) {
+                cupomAplicado = true;
+                document.getElementById('cart-coupon-alert').classList.remove('hidden');
+                document.getElementById('cart-coupon-alert').classList.add('flex');
             }
-        });
+            
+            showToast('Cupom MESTRE10 copiado e ativado!', 'success');
+            atualizarCarrinhoDOM();
+        }
 
-
-        // 2. LÓGICA DO CARRINHO DE COMPRAS
+        /* =========================================
+           LÓGICA DO CARRINHO DE COMPRAS
+        ========================================= */
         let cart = [];
         const numWhatsAppBusiness = "553192316707"; 
         
-        // Elementos do DOM
         const cartSidebar = document.getElementById('cart-sidebar');
         const cartOverlay = document.getElementById('cart-overlay');
-        const cartToggleBtn = document.getElementById('cart-toggle');
-        const closeCartBtn = document.getElementById('close-cart');
         const cartItemsContainer = document.getElementById('cart-items');
-        const emptyCartMsg = document.getElementById('empty-cart-msg');
-        const cartTotalEl = document.getElementById('cart-total');
-        const cartCountEl = document.getElementById('cart-count');
         const checkoutBtn = document.getElementById('checkout-btn');
 
-        // Funções para Abrir/Fechar Carrinho
         function openCart() {
             cartSidebar.classList.remove('translate-x-full');
             cartOverlay.classList.remove('hidden');
             setTimeout(() => cartOverlay.classList.remove('opacity-0'), 10);
-            document.body.style.overflow = 'hidden'; // Impede scroll no fundo
+            document.body.style.overflow = 'hidden'; 
+            document.getElementById('mobile-cart-bar').classList.add('translate-y-full'); // Esconde barra mobile
         }
 
         function closeCart() {
@@ -496,95 +509,157 @@
             cartOverlay.classList.add('opacity-0');
             setTimeout(() => cartOverlay.classList.add('hidden'), 500);
             document.body.style.overflow = '';
+            
+            if(cart.length > 0) {
+                document.getElementById('mobile-cart-bar').classList.remove('translate-y-full'); // Mostra se houver itens
+            }
         }
 
-        cartToggleBtn.addEventListener('click', openCart);
-        closeCartBtn.addEventListener('click', closeCart);
+        document.getElementById('cart-toggle').addEventListener('click', openCart);
+        document.getElementById('close-cart').addEventListener('click', closeCart);
         cartOverlay.addEventListener('click', closeCart);
 
-        // Adicionar item ao carrinho
-        window.adicionarAoCarrinho = function(nome, preco) {
-            // Verifica se já existe
-            const itemExistente = cart.find(item => item.nome === nome);
+        window.adicionarAoCarrinho = function(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if(!product) return;
+
+            const itemExistente = cart.find(item => item.id === productId);
             if(itemExistente) {
                 itemExistente.quantidade += 1;
             } else {
-                cart.push({ nome, preco, quantidade: 1 });
+                cart.push({ ...product, quantidade: 1 });
             }
             
+            showToast(`1x ${product.name} adicionado!`);
             atualizarCarrinhoDOM();
-            openCart(); // Abre sidebar para feedback visual
+            
+            // Animação ícone menu superior
+            gsap.fromTo("#cart-count", {scale: 1.5}, {scale: 1, duration: 0.3, ease: "back.out"});
         }
 
-        // Atualizar interface do carrinho
+        window.alterarQuantidade = function(index, delta) {
+            cart[index].quantidade += delta;
+            if(cart[index].quantidade <= 0) {
+                cart.splice(index, 1);
+            }
+            atualizarCarrinhoDOM();
+        }
+
         function atualizarCarrinhoDOM() {
             cartItemsContainer.innerHTML = '';
-            let total = 0;
+            let subtotal = 0;
             let qtdItens = 0;
 
             if (cart.length === 0) {
-                cartItemsContainer.appendChild(emptyCartMsg);
-                emptyCartMsg.style.display = 'block';
+                document.getElementById('empty-cart-msg').style.display = 'flex';
                 checkoutBtn.disabled = true;
+                document.getElementById('mobile-cart-bar').classList.add('translate-y-full'); // Esconde barra mobile
             } else {
-                emptyCartMsg.style.display = 'none';
+                document.getElementById('empty-cart-msg').style.display = 'none';
                 checkoutBtn.disabled = false;
+                document.getElementById('mobile-cart-bar').classList.remove('translate-y-full'); // Exibe barra mobile
 
                 cart.forEach((item, index) => {
-                    total += item.preco * item.quantidade;
+                    subtotal += item.price * item.quantidade;
                     qtdItens += item.quantidade;
 
                     const itemDiv = document.createElement('div');
-                    itemDiv.className = 'flex justify-between items-center bg-brandBg p-3 rounded-lg border border-brandSec1/20';
-                    
+                    itemDiv.className = 'flex justify-between items-center bg-white p-3 rounded-xl border border-brandSec1/20 shadow-sm';
                     itemDiv.innerHTML = `
-                        <div class="flex-1">
-                            <h5 class="text-brandDark font-bold text-sm">${item.nome}</h5>
-                            <p class="text-brandGreen font-semibold text-xs">R$ ${item.preco.toFixed(2).replace('.', ',')}</p>
+                        <div class="flex-1 pr-2">
+                            <h5 class="text-brandDark font-bold text-sm leading-tight">${item.name}</h5>
+                            <p class="text-brandSec1 font-semibold text-xs mt-1">R$ ${(item.price * item.quantidade).toFixed(2).replace('.', ',')}</p>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <span class="text-sm font-medium">x${item.quantidade}</span>
-                            <button onclick="removerDoCarrinho(${index})" class="text-red-400 hover:text-red-600 p-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                            </button>
+                        <div class="flex items-center gap-2 bg-brandBg p-1 rounded-lg border border-gray-200">
+                            <button onclick="alterarQuantidade(${index}, -1)" class="w-6 h-6 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-red-500 font-bold">-</button>
+                            <span class="text-sm font-bold w-4 text-center">${item.quantidade}</span>
+                            <button onclick="alterarQuantidade(${index}, 1)" class="w-6 h-6 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-brandGreen font-bold">+</button>
                         </div>
                     `;
                     cartItemsContainer.appendChild(itemDiv);
                 });
             }
 
-            cartTotalEl.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            // Lógica de Valores e Desconto
+            document.getElementById('cart-subtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
             
-            // Animação simples de pulso no contador
-            cartCountEl.innerText = qtdItens;
-            gsap.fromTo(cartCountEl, {scale: 1.5}, {scale: 1, duration: 0.3, ease: "back.out"});
+            let descontoAplicado = 0;
+            const discountRow = document.getElementById('cart-discount-row');
+            const warningRow = document.getElementById('min-order-warning');
+            
+            if (cupomAplicado) {
+                if (subtotal >= 23) {
+                    descontoAplicado = subtotal * 0.10; // 10%
+                    discountRow.classList.remove('hidden');
+                    warningRow.classList.add('hidden');
+                } else {
+                    discountRow.classList.add('hidden');
+                    if(subtotal > 0) {
+                        warningRow.classList.remove('hidden');
+                        document.getElementById('val-falta').innerText = (23 - subtotal).toFixed(2).replace('.', ',');
+                    } else {
+                        warningRow.classList.add('hidden');
+                    }
+                }
+            } else {
+                discountRow.classList.add('hidden');
+                warningRow.classList.add('hidden');
+            }
+            
+            document.getElementById('cart-discount-val').innerText = `- R$ ${descontoAplicado.toFixed(2).replace('.', ',')}`;
+            
+            const totalFinal = subtotal - descontoAplicado;
+            const totalString = `R$ ${totalFinal.toFixed(2).replace('.', ',')}`;
+            
+            document.getElementById('cart-total').innerText = totalString;
+            document.getElementById('mobile-cart-total').innerText = totalString;
+            
+            document.getElementById('cart-count').innerText = qtdItens;
+            document.getElementById('mobile-cart-badge').innerText = qtdItens;
         }
 
-        window.removerDoCarrinho = function(index) {
-            cart.splice(index, 1);
-            atualizarCarrinhoDOM();
-        }
-
-        // Finalizar Pedido via WhatsApp
+        // Finalizar Checkout via WhatsApp
         checkoutBtn.addEventListener('click', () => {
             if(cart.length === 0) return;
 
+            let subtotal = 0;
             let textoPedido = "Olá! Gostaria de fazer o seguinte pedido:%0A%0A";
-            let total = 0;
             
             cart.forEach(item => {
-                let subtotal = item.preco * item.quantidade;
-                total += subtotal;
-                textoPedido += `- ${item.quantidade}x ${item.nome} (R$ ${subtotal.toFixed(2).replace('.', ',')})%0A`;
+                let val = item.price * item.quantidade;
+                subtotal += val;
+                textoPedido += `▪️ ${item.quantidade}x ${item.name} - R$ ${val.toFixed(2).replace('.', ',')}%0A`;
             });
 
-            textoPedido += `%0A*Total: R$ ${total.toFixed(2).replace('.', ',')}*%0A%0A`;
-            textoPedido += "Por favor, aguardo instruções sobre a entrega e pagamento.";
+            textoPedido += `%0A*Subtotal:* R$ ${subtotal.toFixed(2).replace('.', ',')}%0A`;
+            
+            let totalFinal = subtotal;
+            if (cupomAplicado && subtotal >= 23) {
+                let desconto = subtotal * 0.10;
+                totalFinal -= desconto;
+                textoPedido += `🏷️ *Desconto (MESTRE10):* - R$ ${desconto.toFixed(2).replace('.', ',')}%0A`;
+            }
+            
+            textoPedido += `*TOTAL A PAGAR:* R$ ${totalFinal.toFixed(2).replace('.', ',')}%0A%0A`;
+            
+            textoPedido += `💳 *Pagamento via PIX* %0AChave (CNPJ): 57.988.054/0001-24%0ANome: Mestre do Açaí Barreiro LTDA%0A%0A`;
+            textoPedido += "Por favor, para qual endereço devo solicitar a entrega?";
 
             const linkWhatsApp = `https://wa.me/${numWhatsAppBusiness}?text=${textoPedido}`;
             window.open(linkWhatsApp, '_blank');
         });
 
+        /* =========================================
+           ANIMAÇÕES DE ENTRADA (GSAP)
+        ========================================= */
+        gsap.from(".hero-anim", { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.1 });
+        gsap.from(".hero-img-anim", { scale: 0.9, opacity: 0, duration: 1, ease: "power2.out" });
+        
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 10) nav.classList.add('shadow-lg');
+            else nav.classList.remove('shadow-lg');
+        });
     </script>
 </body>
 </html>
