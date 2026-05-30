@@ -390,7 +390,7 @@
                 <!-- Nova Seção de Upsell -->
                 <div id="cart-upsell" class="bg-brandBg/80 p-4 rounded-xl border border-brandSec1/10 shadow-sm hidden flex-col">
                     <h6 class="text-sm font-bold text-brandDark mb-3">Combina perfeitamente. Leve junto! 👇</h6>
-                    <div class="flex overflow-x-auto gap-3 pb-2 no-scrollbar" id="upsell-items">
+                    <div class="flex overflow-x-auto category-scroll snap-x gap-3 pb-2 no-scrollbar after:content-[''] after:w-2 after:shrink-0" id="upsell-items">
                         <!-- Injetado via JS -->
                     </div>
                 </div>
@@ -829,7 +829,7 @@
 
         selectedUpsells.forEach(p => {
             const card = document.createElement('div');
-            card.className = "min-w-[130px] w-[130px] bg-white rounded-lg p-2.5 border border-brandSec1/20 shadow-sm flex flex-col gap-2 shrink-0";
+            card.className = "min-w-[120px] w-[120px] bg-white rounded-lg p-2.5 border border-brandSec1/20 shadow-sm flex flex-col gap-2 shrink-0 snap-start";
             card.innerHTML = `
                 <div class="h-20 w-full rounded-md overflow-hidden bg-gray-100 relative">
                     <img src="${p.img}" class="w-full h-full object-cover">
