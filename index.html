@@ -72,6 +72,10 @@
         }
 
         .swal2-container { z-index: 9999 !important; }
+        
+        /* Oculta Checkbox nativo para usar label estilizado no modal */
+        .addon-cb:checked + div { border-color: #90b05c; background-color: #f0fdf4; }
+        .addon-cb:checked + div svg { opacity: 1; }
     </style>
 </head>
 <body class="antialiased selection:bg-brandGreen selection:text-white pb-28 md:pb-0">
@@ -102,7 +106,6 @@
 
                 <!-- Ícones de Ação -->
                 <div class="flex items-center space-x-2 sm:space-x-3">
-                    <!-- Buscar -->
                     <button onclick="focusSearch()" aria-label="Buscar no cardápio"
                         class="h-11 w-11 sm:h-12 sm:w-12 bg-[#ebdff0] hover:bg-[#dfcce6] rounded-full flex items-center justify-center text-[#9a4dcf] transition-all">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -110,7 +113,6 @@
                         </svg>
                     </button>
 
-                    <!-- Compartilhar -->
                     <button onclick="compartilharLoja()" aria-label="Compartilhar cardápio"
                         class="h-11 w-11 sm:h-12 sm:w-12 bg-[#ebdff0] hover:bg-[#dfcce6] rounded-full flex items-center justify-center text-[#9a4dcf] transition-all">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -118,7 +120,6 @@
                         </svg>
                     </button>
 
-                    <!-- Carrinho -->
                     <button id="cart-toggle" aria-label="Abrir carrinho"
                         class="relative ml-1 bg-white text-brandDark hover:text-brandGreen hover:bg-gray-50 transition-all rounded-full shadow-sm border border-brandSec1/10 flex items-center justify-center h-11 w-11 sm:h-12 sm:w-12">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -204,22 +205,18 @@
             <!-- Barra de Busca -->
             <div class="max-w-xl mx-auto mb-8 relative section-title-anim">
                 <label for="search-input" class="sr-only">Buscar produtos</label>
-                <!-- O font-medium text-base (16px) é crucial para o iOS não dar zoom sozinho na tela -->
                 <input type="search" id="search-input" placeholder="Buscar por açaí, cremes..."
                     class="w-full pl-12 pr-10 py-4 rounded-2xl bg-brandBg border-2 border-transparent focus:outline-none focus:border-brandGreen focus:bg-white transition-all text-brandDark shadow-sm font-medium text-base"
                     autocomplete="off" autocorrect="off" spellcheck="false">
-                <svg class="w-6 h-6 absolute left-4 top-[18px] text-brandSec1 pointer-events-none" aria-hidden="true"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 absolute left-4 top-[18px] text-brandSec1 pointer-events-none" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
                 <button id="clear-search" class="hidden absolute right-4 top-[18px] text-brandSec1 hover:text-brandDark p-1" aria-label="Limpar busca">
-                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
+                    <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
-            <!-- Categorias (Edge-to-edge scroll para evitar cortes visuais em mobile) -->
+            <!-- Categorias -->
             <div class="relative mb-10" id="category-container">
                 <div id="category-tabs" role="tablist" aria-label="Categorias do cardápio"
                     class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-4 sm:px-0 snap-x border-b border-brandBg items-center -mx-4 sm:mx-0">
@@ -243,23 +240,14 @@
     <footer class="bg-brandDark text-brandBg pt-12 pb-32 md:pb-12 border-t-[8px] border-brandGreen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-
-                <!-- Coluna 1 -->
                 <div>
                     <h3 class="font-poppins text-xl font-bold mb-4">Mestre do Açaí</h3>
-                    <p class="text-brandSec1 text-sm leading-relaxed mb-4">
-                        O melhor açaí da região. Eleito Super Restaurante. #Sejaummestre
-                    </p>
-                    <a href="https://www.instagram.com/mestredoacai1/" target="_blank" rel="noopener noreferrer"
-                       class="inline-flex items-center gap-2 text-brandGreen hover:text-white transition-colors bg-brandSec2/20 px-4 py-2.5 rounded-lg font-medium text-sm">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                        </svg>
+                    <p class="text-brandSec1 text-sm leading-relaxed mb-4">O melhor açaí da região. Eleito Super Restaurante. #Sejaummestre</p>
+                    <a href="https://www.instagram.com/mestredoacai1/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-brandGreen hover:text-white transition-colors bg-brandSec2/20 px-4 py-2.5 rounded-lg font-medium text-sm">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                         @mestredoacai1
                     </a>
                 </div>
-
-                <!-- Coluna 2 -->
                 <div>
                     <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Informações</h4>
                     <ul class="text-sm text-brandBg space-y-2">
@@ -270,8 +258,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- Coluna 3 -->
                 <div>
                     <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Pagamento via PIX</h4>
                     <div class="bg-brandBg text-brandDark p-4 rounded-xl inline-block border border-brandSec1/30">
@@ -279,25 +265,17 @@
                         <p class="font-mono text-sm font-bold bg-white p-2 rounded text-center border border-gray-200 select-all">57.988.054/0001-24</p>
                     </div>
                 </div>
-
-                <!-- Coluna 4: Links Rápidos -->
                 <div>
                     <h4 class="font-poppins text-lg font-bold mb-4 text-brandGreen">Links Rápidos</h4>
                     <ul class="text-sm space-y-3">
-                        <li><a href="#inicio"   class="text-brandBg hover:text-brandGreen transition-colors">Início</a></li>
+                        <li><a href="#inicio" class="text-brandBg hover:text-brandGreen transition-colors">Início</a></li>
                         <li><a href="#cardapio" class="text-brandBg hover:text-brandGreen transition-colors">Cardápio</a></li>
-                        <li>
-                            <button onclick="aplicarCupom()"
-                                class="text-brandBg hover:text-brandGreen transition-colors flex items-center gap-2 text-left"
-                                aria-label="Copiar cupom MESTRE10">
-                                🏷️ Cupom MESTRE10
-                            </button>
-                        </li>
+                        <li><button onclick="aplicarCupom()" class="text-brandBg hover:text-brandGreen transition-colors flex items-center gap-2 text-left" aria-label="Copiar cupom MESTRE10">🏷️ Cupom MESTRE10</button></li>
                     </ul>
                 </div>
             </div>
 
-            <!-- WPP Discreto e Direitos Autorais (2026) -->
+            <!-- WPP Discreto e Direitos Autorais -->
             <div class="pt-6 border-t border-brandSec2/40 text-center flex flex-col items-center gap-1.5">
                 <p class="text-xs text-brandSec1">&copy; 2026 Mestre do Açaí. Todos os direitos reservados.</p>
                 <a href="https://wa.me/553192316707" target="_blank" rel="noopener noreferrer" class="text-[10px] text-brandSec1/60 hover:text-brandGreen transition-colors opacity-80">
@@ -308,9 +286,7 @@
     </footer>
 
     <!-- BARRA MOBILE INFERIOR -->
-    <div id="mobile-cart-bar"
-        class="md:hidden fixed bottom-0 left-0 w-full bg-brandDark text-white p-4 pb-6 flex justify-between items-center z-[80] shadow-[0_-10px_30px_rgba(0,0,0,0.25)] transform translate-y-full transition-transform duration-300 rounded-t-2xl border-t border-brandSec2/50"
-        aria-live="polite">
+    <div id="mobile-cart-bar" class="md:hidden fixed bottom-0 left-0 w-full bg-brandDark text-white p-4 pb-6 flex justify-between items-center z-[80] shadow-[0_-10px_30px_rgba(0,0,0,0.25)] transform translate-y-full transition-transform duration-300 rounded-t-2xl border-t border-brandSec2/50" aria-live="polite">
         <div class="flex flex-col">
             <span class="text-[11px] font-semibold text-brandSec1 uppercase tracking-wider">Total do Pedido</span>
             <span id="mobile-cart-total" class="font-bold text-xl text-brandGreen">R$ 0,00</span>
@@ -321,97 +297,113 @@
         </button>
     </div>
 
-    <!-- SIDEBAR DO CARRINHO -->
-    <aside id="cart-sidebar" role="dialog" aria-modal="true" aria-label="Carrinho de compras"
-        class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-brandBg z-[100] transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
+    <!-- MODAL DE PERSONALIZAÇÃO DE COMPLEMENTOS -->
+    <div id="addons-modal" class="fixed inset-0 bg-brandDark/70 backdrop-blur-sm z-[110] hidden opacity-0 transition-opacity duration-300 flex items-end sm:items-center justify-center px-0 sm:px-4 pb-0 sm:pb-4" aria-hidden="true">
+        <div id="addons-modal-content" class="bg-brandBg w-full sm:w-[550px] max-h-[90vh] h-[90vh] sm:h-auto rounded-t-3xl sm:rounded-3xl flex flex-col shadow-2xl transform translate-y-full transition-transform duration-300 ease-out overflow-hidden">
+            
+            <!-- Header Modal -->
+            <div class="p-5 bg-white border-b border-brandSec1/10 flex justify-between items-center shrink-0">
+                <div class="pr-4">
+                    <h3 class="font-poppins text-lg font-bold text-brandDark leading-tight" id="addon-modal-title">Monte seu pedido</h3>
+                    <p class="text-xs text-brandSec1 mt-1 leading-relaxed" id="addon-modal-desc">Personalize os detalhes abaixo</p>
+                </div>
+                <button onclick="closeAddonsModal()" class="w-8 h-8 flex items-center justify-center bg-brandBg rounded-full text-brandSec1 hover:text-brandDark hover:bg-gray-200 transition-colors shrink-0" aria-label="Fechar">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Body Modal -->
+            <div class="p-5 overflow-y-auto no-scrollbar flex-1 bg-[#faf9fb]" id="addon-modal-body">
+                <!-- Seção Grátis (Injetado via JS) -->
+                <div id="addons-free-section" class="mb-5 bg-white p-4 sm:p-5 rounded-2xl border border-brandSec1/10 shadow-sm hidden">
+                    <div class="flex justify-between items-baseline mb-4">
+                        <h4 class="font-bold text-brandDark text-sm">Complementos (Obrigatório)</h4>
+                        <span id="addon-free-counter" class="text-[10px] font-bold bg-brandGreen/10 text-brandGreen px-2 py-1 rounded-md uppercase tracking-wider">Escolha de 1 a 3</span>
+                    </div>
+                    <div id="addons-free-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                </div>
 
-        <!-- Cabeçalho -->
+                <!-- Seção Pagos (Injetado via JS) -->
+                <div id="addons-paid-section" class="mb-5 bg-white p-4 sm:p-5 rounded-2xl border border-brandSec1/10 shadow-sm hidden">
+                    <div class="mb-4">
+                        <h4 class="font-bold text-brandDark text-sm">Deseja Adicionar?</h4>
+                        <p class="text-xs text-brandSec1 mt-0.5">Turbine o seu pedido (Escolha até 20 itens no total)</p>
+                    </div>
+                    <div id="addons-paid-list" class="flex flex-col gap-1"></div>
+                </div>
+
+                <!-- Seção Observações -->
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-brandSec1/10 shadow-sm">
+                    <h4 class="font-bold text-brandDark text-sm mb-3">Observações</h4>
+                    <textarea id="addon-obs-input" rows="2" placeholder="Ex: Tirar a banana, caprichar no leite em pó..." class="w-full text-sm p-3 rounded-xl bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none resize-none"></textarea>
+                </div>
+            </div>
+            
+            <!-- Footer Modal -->
+            <div class="p-5 bg-white border-t border-brandSec1/10 shrink-0">
+                <button onclick="confirmAddons()" id="addon-confirm-btn" class="w-full py-4 bg-brandGreen text-white font-bold rounded-xl shadow-lg shadow-brandGreen/30 hover:bg-[#7a994b] transition-all active:scale-95 flex justify-between px-6 items-center">
+                    <span>Adicionar ao Pedido</span>
+                    <span id="addon-total-price">R$ 0,00</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR DO CARRINHO -->
+    <aside id="cart-sidebar" role="dialog" aria-modal="true" aria-label="Carrinho de compras" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-brandBg z-[100] transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
+
+        <!-- Cabeçalho Carrinho -->
         <div class="p-5 bg-brandDark text-white flex justify-between items-center shadow-md z-10 shrink-0">
             <h3 class="text-xl font-bold font-poppins flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brandGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brandGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                 O Seu Pedido
             </h3>
             
             <div class="flex items-center gap-2">
-                <!-- Botão Lixeira (Apenas visível com itens) -->
-                <button id="clear-cart-btn" onclick="limparCarrinho()" aria-label="Esvaziar carrinho" title="Esvaziar carrinho"
-                    class="hidden text-red-400 hover:text-white bg-white/5 hover:bg-red-500 p-2 rounded-full transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                    </svg>
+                <button id="clear-cart-btn" onclick="limparCarrinho()" aria-label="Esvaziar carrinho" title="Esvaziar carrinho" class="hidden text-red-400 hover:text-white bg-white/5 hover:bg-red-500 p-2 rounded-full transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </button>
-                <button id="close-cart" aria-label="Fechar carrinho"
-                    class="text-brandSec1 hover:text-white bg-white/10 p-2 rounded-full transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
+                <button id="close-cart" aria-label="Fechar carrinho" class="text-brandSec1 hover:text-white bg-white/10 p-2 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Alerta Cupom -->
-        <div id="cart-coupon-alert"
-            class="hidden shrink-0 bg-brandBlue/10 text-brandBlue px-4 py-3 text-sm font-semibold border-b border-brandBlue/20 items-center justify-center gap-2"
-            role="status">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-            </svg>
+        <div id="cart-coupon-alert" class="hidden shrink-0 bg-brandBlue/10 text-brandBlue px-4 py-3 text-sm font-semibold border-b border-brandBlue/20 items-center justify-center gap-2" role="status">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
             Cupom MESTRE10 aplicado!
         </div>
 
-        <!-- Scrollable Middle Section -->
         <div class="flex-grow p-4 sm:p-6 overflow-y-auto no-scrollbar relative bg-white/50 flex flex-col gap-6">
-
-            <!-- Estado vazio -->
             <div class="text-center text-brandSec1 mt-10 flex flex-col items-center" id="empty-cart-msg">
                 <div class="bg-white p-5 rounded-full mb-4 shadow-sm border border-brandSec1/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brandSec2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-brandSec2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 </div>
                 <p class="font-medium text-lg">O seu carrinho está vazio.</p>
                 <p class="text-sm mt-1">Navegue pelo cardápio e adicione delícias.</p>
-                <button onclick="closeCart(); focusSearch();"
-                    class="mt-6 px-6 py-2 bg-brandBg text-brandDark rounded-full text-sm font-bold border border-brandSec1/20 shadow-sm hover:bg-[#dfcce6] transition-colors">
-                    Voltar ao Cardápio
-                </button>
+                <button onclick="closeCart(); focusSearch();" class="mt-6 px-6 py-2 bg-brandBg text-brandDark rounded-full text-sm font-bold border border-brandSec1/20 shadow-sm hover:bg-[#dfcce6] transition-colors">Voltar ao Cardápio</button>
             </div>
 
-            <!-- Conteúdo Preenchido (Itens, Upsell, Form) -->
             <div id="cart-content-wrapper" class="hidden flex-col gap-6">
-                
-                <!-- Lista de itens -->
-                <div id="cart-items" class="flex flex-col gap-3" role="list" aria-label="Itens no carrinho">
-                    <!-- Injetado via JS -->
-                </div>
+                <div id="cart-items" class="flex flex-col gap-3" role="list"></div>
 
-                <!-- Seção de Upsell (Sugestões) -->
                 <div id="cart-upsell" class="bg-brandBg/80 p-4 rounded-xl border border-brandSec1/10 shadow-sm hidden flex-col">
                     <h6 class="text-sm font-bold text-brandDark mb-3">Combina perfeitamente. Leve junto! 👇</h6>
-                    <!-- Scroll edge to edge (largura do card cortada induz ao scroll) -->
-                    <div class="flex overflow-x-auto category-scroll snap-x gap-3 pb-2 no-scrollbar after:content-[''] after:w-2 after:shrink-0" id="upsell-items">
-                        <!-- Injetado via JS -->
-                    </div>
+                    <div class="flex overflow-x-auto category-scroll snap-x gap-3 pb-2 no-scrollbar after:content-[''] after:w-2 after:shrink-0" id="upsell-items"></div>
                 </div>
 
-                <!-- Formulário de Entrega/Retirada -->
                 <div class="bg-white p-4 rounded-xl border border-brandSec1/20 shadow-sm flex flex-col gap-4">
                     <h6 class="text-sm font-bold text-brandDark">Opção de Recebimento</h6>
                     
-                    <!-- Abas de Opção -->
                     <div class="flex gap-2 p-1.5 bg-brandBg rounded-lg">
                         <button id="tab-delivery" class="flex-1 py-2 text-sm font-bold bg-white text-brandGreen shadow rounded-md transition-all">Entrega</button>
                         <button id="tab-pickup" class="flex-1 py-2 text-sm font-bold text-brandSec1 hover:text-brandDark transition-all">Retirada</button>
                     </div>
 
-                    <!-- Campos do Cliente (Comum) -->
                     <div class="flex flex-col gap-3">
                         <input type="text" id="cust-name" placeholder="Seu Nome Completo" class="w-full text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none">
                     </div>
 
-                    <!-- Campos de Endereço (Só aparece se for Entrega) -->
                     <div id="form-delivery-info" class="flex flex-col gap-3">
                         <input type="text" id="cust-street" placeholder="Rua / Avenida" class="w-full text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none">
                         <div class="flex gap-3">
@@ -421,7 +413,6 @@
                         <input type="text" id="cust-complement" placeholder="Complemento / Ponto de Ref. (Opcional)" class="w-full text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none">
                     </div>
 
-                    <!-- Pagamento -->
                     <div class="flex flex-col gap-2 mt-1">
                         <h6 class="text-sm font-bold text-brandDark">Forma de Pagamento</h6>
                         <select id="cust-payment" class="w-full text-sm p-3 rounded-lg bg-brandBg border border-transparent focus:border-brandGreen focus:bg-white transition-all outline-none cursor-pointer">
@@ -431,23 +422,19 @@
                         </select>
                     </div>
                 </div>
+            </div>
+        </div>
 
-            </div> <!-- Fim Wrapper -->
-        </div> <!-- Fim Scroll Area -->
-
-        <!-- Rodapé Carrinho (Resumo de Valores) -->
         <div class="p-6 pb-8 sm:pb-6 bg-white rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-10 border-t border-brandSec1/10 shrink-0">
             <div class="space-y-2 mb-4" aria-live="polite">
                 <div class="flex justify-between text-sm text-brandDark font-medium">
                     <span>Subtotal:</span>
                     <span id="cart-subtotal">R$ 0,00</span>
                 </div>
-                <!-- Desconto -->
                 <div id="cart-discount-row" class="hidden justify-between text-sm text-brandBlue font-bold">
                     <span>Desconto (10%):</span>
                     <span id="cart-discount-val">- R$ 0,00</span>
                 </div>
-                <!-- Aviso pedido mínimo -->
                 <div id="min-order-warning" class="hidden text-xs text-red-500 font-medium bg-red-50 p-2 rounded-lg border border-red-100 mt-1" role="alert">
                     Faltam R$ <span id="val-falta">0,00</span> para ativar o desconto (Mín R$ 23).
                 </div>
@@ -457,75 +444,84 @@
                 </div>
             </div>
 
-            <button id="checkout-btn" disabled
-                class="w-full py-4 bg-brandGreen text-white font-bold rounded-xl hover:bg-[#7a994b] transition-all shadow-lg shadow-brandGreen/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 active:scale-95 text-lg"
-                aria-label="Finalizar pedido via WhatsApp">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
+            <button id="checkout-btn" disabled class="w-full py-4 bg-brandGreen text-white font-bold rounded-xl hover:bg-[#7a994b] transition-all shadow-lg shadow-brandGreen/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 active:scale-95 text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Finalizar Pedido
             </button>
         </div>
     </aside>
 
-    <!-- Overlay -->
-    <div id="cart-overlay"
-        class="fixed inset-0 bg-brandDark/50 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-500"
-        aria-hidden="true">
-    </div>
+    <div id="cart-overlay" class="fixed inset-0 bg-brandDark/50 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-500" aria-hidden="true"></div>
 
-    <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
 
     <script>
     /* ─────────────────────────────────────────
-       DADOS DO CARDÁPIO
+       DADOS BASE & COMPLEMENTOS
     ───────────────────────────────────────── */
+    // Complementos Grátis e Pagos mapeados conforme a solicitação
+    const ADDONS_FREE = [
+        "Creme puro", "Leite em Pó", "Leite Condensado", "Paçoca", "Ouro Branco", 
+        "Granola", "Chantilly", "Bis Preto", "Chocoball", "Farinha Láctea", 
+        "Gotas de Chocolate", "Doce de Leite", "Sonho de Valsa", "Confete", 
+        "Prestígio", "Mel", "Granulado", "Morango", "Kiwi", "Banana", "Abacaxi", 
+        "Maracujá", "Manga", "Cobertura de Caramelo", "Cobertura de Chocolate", "Cobertura de Morango"
+    ];
+
+    const ADDONS_PAID = [
+        { name: "Leite em Pó", price: 4 }, { name: "Leite Condensado", price: 4 }, { name: "Paçoca", price: 4 },
+        { name: "Ouro Branco", price: 4 }, { name: "Granola", price: 4 }, { name: "Bis", price: 4 },
+        { name: "Chantilly", price: 4 }, { name: "Chocoball", price: 4 }, { name: "Farinha Láctea", price: 4 },
+        { name: "Gotas de Chocolate", price: 4 }, { name: "Doce de Leite", price: 4 }, { name: "Sonho de Valsa", price: 4 },
+        { name: "Confete", price: 4 }, { name: "Prestígio", price: 4 }, { name: "Mel", price: 4 },
+        { name: "Granulado", price: 4 }, { name: "Abacaxi", price: 4 }, { name: "Maracujá", price: 4 },
+        { name: "Manga", price: 4 }, { name: "Kiwi", price: 4 }, { name: "Banana", price: 4 },
+        { name: "Morango", price: 4 }, { name: "Cobertura de morango", price: 4 }, { name: "Cobertura de Chocolate", price: 4 },
+        { name: "Cereja", price: 5 }, { name: "Kit Kat", price: 5 }, { name: "Creme de Avelã", price: 5 },
+        { name: "Tortuguita", price: 5 }, { name: "Diamante Negro", price: 5 }, { name: "Creme De Ninho", price: 5 },
+        { name: "Ovomaltine", price: 5 }, { name: "Laka", price: 5 }, { name: "Castanha de Cajú", price: 5 },
+        { name: "Oreo", price: 5 }, { name: "Creme de morango", price: 5 }, { name: "Creme de Maracujá", price: 5 },
+        { name: "Nutella", price: 7 }
+    ];
+
+    // Produtos com "customizable: true" vão abrir o modal
     const PRODUCTS = [
-        // MAIS VENDIDOS
-        { id: 101, category: "Mais Vendidos",    name: "Mix Açaí NinhoTella",          desc: "Açaí + leite em pó + morango + Nutella + creme de Ninho",                  price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: true  },
-        { id: 102, category: "Mais Vendidos",    name: "Creme de Açaí 500 ml",         desc: "Creme + 3 Complementos",                                                   price: 30, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false },
-        { id: 103, category: "Mais Vendidos",    name: "Creme de Açaí 355 ml",         desc: "Creme + 3 Complementos",                                                   price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
-        { id: 104, category: "Mais Vendidos",    name: "Açaí no Copo 500 ml",          desc: "Inclui: 3 complementos comuns + 1 especial",                               price: 30, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
-        { id: 105, category: "Mais Vendidos",    name: "Açaí Ninho Trufado 1 Litro",   desc: "Produto Destaque da Casa",                                                 price: 47, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
+        { id: 101, category: "Mais Vendidos",    name: "Mix Açaí NinhoTella",          desc: "Açaí + leite em pó + morango + Nutella + creme de Ninho",                  price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: true, customizable: true, maxFree: 3 },
+        { id: 102, category: "Mais Vendidos",    name: "Creme de Açaí 500 ml",         desc: "Creme + 3 Complementos",                                                   price: 30, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 103, category: "Mais Vendidos",    name: "Creme de Açaí 355 ml",         desc: "Creme + 3 Complementos",                                                   price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 104, category: "Mais Vendidos",    name: "Açaí no Copo 500 ml",          desc: "Inclui: 3 complementos comuns + 1 especial",                               price: 30, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 105, category: "Mais Vendidos",    name: "Açaí Ninho Trufado 1 Litro",   desc: "Produto Destaque da Casa",                                                 price: 47, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true, customizable: true, maxFree: 3 },
 
-        // MIXES ESPECIAIS
-        { id: 201, category: "Mixes Especiais",  name: "Mix Açaí com Leite em Pó",     desc: "Açaí com 2 camadas de leite em pó",                                        price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
-        { id: 202, category: "Mixes Especiais",  name: "Açaí + Leite em Pó + Condensado", desc: "Clássico Irresistível",                                                 price: 25, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
-        { id: 203, category: "Mixes Especiais",  name: "Açaí + Ninho + Condensado + Morango", desc: "Toque de frutas frescas",                                           price: 28, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
-        { id: 204, category: "Mixes Especiais",  name: "Mix Maracujá com Nutella",     desc: "Açaí + Nutella + creme de maracujá + leite em pó + maracujá",              price: 32, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
-        { id: 205, category: "Mixes Especiais",  name: "Mix Açaí Morango",             desc: "Açaí + leite em pó + morango + Bis + creme de morango",                    price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
-        { id: 206, category: "Mixes Especiais",  name: "Mix Açaí Morango & Avelã",     desc: "Açaí + leite em pó + creme morango + Sonho de Valsa + creme avelã",        price: 35, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: true  },
+        { id: 201, category: "Mixes Especiais",  name: "Mix Açaí com Leite em Pó",     desc: "Açaí com 2 camadas de leite em pó",                                        price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 202, category: "Mixes Especiais",  name: "Açaí + Leite em Pó + Condensado", desc: "Clássico Irresistível",                                                 price: 25, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 203, category: "Mixes Especiais",  name: "Açaí + Ninho + Condensado + Morango", desc: "Toque de frutas frescas",                                           price: 28, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 204, category: "Mixes Especiais",  name: "Mix Maracujá com Nutella",     desc: "Açaí + Nutella + creme de maracujá + leite em pó + maracujá",              price: 32, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true,  customizable: true, maxFree: 3 },
+        { id: 205, category: "Mixes Especiais",  name: "Mix Açaí Morango",             desc: "Açaí + leite em pó + morango + Bis + creme de morango",                    price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 206, category: "Mixes Especiais",  name: "Mix Açaí Morango & Avelã",     desc: "Açaí + leite em pó + creme morango + Sonho de Valsa + creme avelã",        price: 35, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: true,  customizable: true, maxFree: 3 },
 
-        // AÇAÍ NO COPO
-        { id: 301, category: "Açaí no Copo",     name: "Açaí no Copo 300 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 25, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
-        { id: 302, category: "Açaí no Copo",     name: "Açaí no Copo 500 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
-        { id: 303, category: "Açaí no Copo",     name: "Açaí no Copo 710 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 35, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
+        { id: 301, category: "Açaí no Copo",     name: "Açaí no Copo 300 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 25, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 302, category: "Açaí no Copo",     name: "Açaí no Copo 500 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 303, category: "Açaí no Copo",     name: "Açaí no Copo 710 ml",          desc: "3 complementos comuns + 1 especial",                                       price: 35, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true,  customizable: true, maxFree: 3 },
 
-        // CREME DE AÇAÍ
-        { id: 401, category: "Creme de Açaí",    name: "Creme de Açaí 355 ml",         desc: "Acompanha 3 complementos",                                                 price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false },
-        { id: 402, category: "Creme de Açaí",    name: "Creme de Açaí 500 ml",         desc: "Acompanha 3 complementos",                                                 price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
-        { id: 403, category: "Creme de Açaí",    name: "Creme de Açaí 700 ml",         desc: "Acompanha 3 complementos",                                                 price: 35, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false },
-        { id: 404, category: "Creme de Açaí",    name: "Creme de Açaí 1 Litro",        desc: "Acompanha 3 complementos",                                                 price: 42, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true  },
-        { id: 405, category: "Creme de Açaí",    name: "Creme Zero Açúcar 1L",         desc: "Acompanha 3 complementos (Zero)",                                          price: 49, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false },
-        { id: 406, category: "Creme de Açaí",    name: "Opção Pura",                   desc: "Açaí com Leite em Pó + Condensado + Banana + Granola",                     price: 28, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false },
+        { id: 401, category: "Creme de Açaí",    name: "Creme de Açaí 355 ml",         desc: "Acompanha 3 complementos",                                                 price: 25, img: "https://images.unsplash.com/photo-1626244439002-3162fb1fbf81?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 402, category: "Creme de Açaí",    name: "Creme de Açaí 500 ml",         desc: "Acompanha 3 complementos",                                                 price: 30, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 403, category: "Creme de Açaí",    name: "Creme de Açaí 700 ml",         desc: "Acompanha 3 complementos",                                                 price: 35, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 404, category: "Creme de Açaí",    name: "Creme de Açaí 1 Litro",        desc: "Acompanha 3 complementos",                                                 price: 42, img: "https://images.unsplash.com/photo-1555310635-430983ee594b?w=500&q=80", isHighlight: true,  customizable: true, maxFree: 3 },
+        { id: 405, category: "Creme de Açaí",    name: "Creme Zero Açúcar 1L",         desc: "Acompanha 3 complementos (Zero)",                                          price: 49, img: "https://images.unsplash.com/photo-1589881655811-19616dcb4e5a?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 406, category: "Creme de Açaí",    name: "Opção Pura",                   desc: "Açaí com Leite em Pó + Condensado + Banana + Granola",                     price: 28, img: "https://images.unsplash.com/photo-1596649298718-47eebcb7b0c7?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
 
-        // SORVETE GOURMET
-        { id: 501, category: "Sorvete Gourmet",  name: "Sorvete 300 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 25, img: "https://images.unsplash.com/photo-1570197781417-0a823758030d?w=500&q=80", isHighlight: false },
-        { id: 502, category: "Sorvete Gourmet",  name: "Sorvete 500 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 30, img: "https://images.unsplash.com/photo-1558223616-2c700e408ec2?w=500&q=80", isHighlight: false },
-        { id: 503, category: "Sorvete Gourmet",  name: "Sorvete 710 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 35, img: "https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?w=500&q=80", isHighlight: true  },
+        { id: 501, category: "Sorvete Gourmet",  name: "Sorvete 300 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 25, img: "https://images.unsplash.com/photo-1570197781417-0a823758030d?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 502, category: "Sorvete Gourmet",  name: "Sorvete 500 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 30, img: "https://images.unsplash.com/photo-1558223616-2c700e408ec2?w=500&q=80", isHighlight: false, customizable: true, maxFree: 3 },
+        { id: 503, category: "Sorvete Gourmet",  name: "Sorvete 710 ml",               desc: "2 sabores + 3 adicionais + 1 cobertura",                                   price: 35, img: "https://images.unsplash.com/photo-1563805042-7684c8a9e9cb?w=500&q=80", isHighlight: true,  customizable: true, maxFree: 3 },
 
-        // VITAMINAS
-        { id: 601, category: "Vitaminas",        name: "Vitamina de Açaí 300 ml",      desc: "Inclui 1 adicional comum",                                                 price: 17, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
-        { id: 602, category: "Vitaminas",        name: "Vitamina de Açaí 500 ml",      desc: "Inclui 1 adicional comum",                                                 price: 22, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
-        { id: 603, category: "Vitaminas",        name: "Vitamina de Açaí 700 ml",      desc: "Inclui 1 adicional comum",                                                 price: 27, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false },
+        { id: 601, category: "Vitaminas",        name: "Vitamina de Açaí 300 ml",      desc: "Inclui 1 adicional comum",                                                 price: 17, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false, customizable: true, maxFree: 1 },
+        { id: 602, category: "Vitaminas",        name: "Vitamina de Açaí 500 ml",      desc: "Inclui 1 adicional comum",                                                 price: 22, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false, customizable: true, maxFree: 1 },
+        { id: 603, category: "Vitaminas",        name: "Vitamina de Açaí 700 ml",      desc: "Inclui 1 adicional comum",                                                 price: 27, img: "https://images.unsplash.com/photo-1599818817743-30ef480becc4?w=500&q=80", isHighlight: false, customizable: true, maxFree: 1 },
 
-        // PALETAS
         { id: 701, category: "Paletas Mexicanas",name: "Paleta Rafaello",              desc: "Picolé recheado artesanal",                                                price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: false },
         { id: 702, category: "Paletas Mexicanas",name: "Paleta Ferrero Rocher",        desc: "Picolé recheado artesanal",                                                price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: false },
         { id: 703, category: "Paletas Mexicanas",name: "Paleta Morango com Nutella",   desc: "Clássica irresistível",                                                    price: 12, img: "https://images.unsplash.com/photo-1517242851214-996cd934c987?w=500&q=80", isHighlight: true  },
 
-        // BEBIDAS
         { id: 801, category: "Bebidas",          name: "Água 500 ml / com Gás",        desc: "Garrafa Plástica",                                                         price:  4, img: "https://images.unsplash.com/photo-1616118132534-381148898bb4?w=500&q=80", isHighlight: false },
         { id: 802, category: "Bebidas",          name: "Refrigerantes Lata (Vários)",  desc: "Coca, Fanta, Sprite, Schweppes",                                           price:  6, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&q=80", isHighlight: false },
         { id: 803, category: "Bebidas",          name: "Red Bull",                     desc: "Lata 250ml",                                                               price: 12, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&q=80", isHighlight: false },
@@ -537,26 +533,19 @@
 
     const formatBRL = val => val.toFixed(2).replace('.', ',');
 
+    /* ─────────────────────────────────────────
+       FUNÇÕES UTILITÁRIAS
+    ───────────────────────────────────────── */
     async function copyToClipboard(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            try {
-                await navigator.clipboard.writeText(text);
-                return true;
-            } catch { /* fallback */ }
+            try { await navigator.clipboard.writeText(text); return true; } catch { }
         }
-        const el = Object.assign(document.createElement('textarea'), {
-            value: text, readOnly: true, style: 'position:absolute;left:-9999px;top:0'
-        });
+        const el = Object.assign(document.createElement('textarea'), { value: text, readOnly: true, style: 'position:absolute;left:-9999px;top:0' });
         document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
+        el.select(); document.execCommand('copy'); document.body.removeChild(el);
         return true;
     }
 
-    /* ─────────────────────────────────────────
-       BUSCA E COMPARTILHAMENTO
-    ───────────────────────────────────────── */
     function focusSearch() {
         document.getElementById('cardapio').scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(() => document.getElementById('search-input').focus(), 600);
@@ -565,19 +554,10 @@
     async function compartilharLoja() {
         const url = window.location.href;
         if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: 'Mestre do Açaí Delivery',
-                    text: 'O melhor açaí da região! Faça o seu pedido online:',
-                    url
-                });
-                return;
-            } catch (err) {
-                if (err.name === 'AbortError') return;
-            }
+            try { await navigator.share({ title: 'Mestre do Açaí Delivery', text: 'O melhor açaí da região! Faça o seu pedido online:', url }); return; } 
+            catch (err) { if (err.name === 'AbortError') return; }
         }
-        await copyToClipboard(url);
-        showToast('Link da loja copiado com sucesso!', 'success');
+        await copyToClipboard(url); showToast('Link da loja copiado com sucesso!', 'success');
     }
 
     const searchInput       = document.getElementById('search-input');
@@ -588,73 +568,35 @@
     searchInput.addEventListener('input', e => {
         const term = e.target.value.toLowerCase().trim();
         if (term.length > 0) {
-            clearSearchBtn.classList.remove('hidden');
-            categoryContainer.classList.add('hidden');
-            renderProductsList(PRODUCTS.filter(p =>
-                p.name.toLowerCase().includes(term) ||
-                p.desc.toLowerCase().includes(term)
-            ));
+            clearSearchBtn.classList.remove('hidden'); categoryContainer.classList.add('hidden');
+            renderProductsList(PRODUCTS.filter(p => p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term)));
         } else {
             clearSearch();
         }
     });
 
     clearSearchBtn.addEventListener('click', clearSearch);
+    function clearSearch() { searchInput.value = ''; clearSearchBtn.classList.add('hidden'); categoryContainer.classList.remove('hidden'); renderProducts(); }
 
-    function clearSearch() {
-        searchInput.value = '';
-        clearSearchBtn.classList.add('hidden');
-        categoryContainer.classList.remove('hidden');
-        renderProducts();
-    }
-
-    /* ─────────────────────────────────────────
-       RENDERIZAÇÃO DE CATEGORIAS / PRODUTOS
-    ───────────────────────────────────────── */
     function renderCategories() {
         const container = document.getElementById('category-tabs');
         container.innerHTML = '';
-
         CATEGORIES.forEach(cat => {
             const isActive = cat === currentCategory;
             const btn = Object.assign(document.createElement('button'), {
-                className: `whitespace-nowrap px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 snap-center ${
-                    isActive
-                        ? 'bg-brandDark text-white shadow-md scale-105'
-                        : 'bg-white text-brandSec1 border border-brandBg hover:bg-brandBg hover:text-brandDark'
-                }`,
-                innerText: cat,
-                role:      'tab',
-                ariaSelected: String(isActive)
+                className: `whitespace-nowrap px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 snap-center ${ isActive ? 'bg-brandDark text-white shadow-md scale-105' : 'bg-white text-brandSec1 border border-brandBg hover:bg-brandBg hover:text-brandDark'}`,
+                innerText: cat, role: 'tab', ariaSelected: String(isActive)
             });
-            btn.onclick = () => {
-                currentCategory = cat;
-                clearSearch();
-                renderCategories();
-                renderProducts();
-                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            };
+            btn.onclick = () => { currentCategory = cat; clearSearch(); renderCategories(); renderProducts(); btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); };
             container.appendChild(btn);
         });
-        
-        // Espaçador crítico UX Mobile
-        const spacer = Object.assign(document.createElement('div'), { className: 'shrink-0 w-8 h-1 md:hidden' });
-        container.appendChild(spacer);
     }
 
-    function renderProducts() {
-        renderProductsList(PRODUCTS.filter(p => p.category === currentCategory));
-    }
+    function renderProducts() { renderProductsList(PRODUCTS.filter(p => p.category === currentCategory)); }
 
     function renderProductsList(list) {
-        const container = document.getElementById('products-grid');
-        container.innerHTML = '';
-
-        if (list.length === 0) {
-            noResultsMsg.classList.remove('hidden');
-            return;
-        }
-
+        const container = document.getElementById('products-grid'); container.innerHTML = '';
+        if (list.length === 0) { noResultsMsg.classList.remove('hidden'); return; }
         noResultsMsg.classList.add('hidden');
 
         list.forEach(product => {
@@ -662,11 +604,10 @@
             card.setAttribute('role', 'listitem');
             card.className = 'bg-white rounded-2xl p-4 border border-brandBg hover:border-brandSec1/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group relative';
             card.innerHTML = `
-                ${product.isHighlight ? `<div class="absolute top-2 left-2 z-10 bg-brandGreen text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md" aria-label="Produto em destaque">Destaque</div>` : ''}
+                ${product.isHighlight ? `<div class="absolute top-2 left-2 z-10 bg-brandGreen text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">Destaque</div>` : ''}
                 <div class="relative h-48 sm:h-52 rounded-xl overflow-hidden mb-4 bg-gray-100">
-                    <img src="${product.img}" alt="${product.name}" loading="lazy"
-                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true"></div>
+                    <img src="${product.img}" alt="${product.name}" loading="lazy" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
                 <div class="flex-grow flex flex-col justify-between">
                     <div>
@@ -674,13 +615,9 @@
                         <p class="text-brandSec2 text-xs leading-relaxed mb-4 line-clamp-2">${product.desc}</p>
                     </div>
                     <div class="flex items-center justify-between mt-auto pt-2 border-t border-brandBg/50">
-                        <span class="text-xl font-black text-brandGreen font-poppins" aria-label="Preço R$ ${formatBRL(product.price)}">R$ ${formatBRL(product.price)}</span>
-                        <button onclick="adicionarAoCarrinho(${product.id})"
-                            class="w-12 h-12 bg-brandBg rounded-full flex items-center justify-center text-brandDark hover:bg-brandGreen hover:text-white transition-colors duration-300 shadow-sm active:scale-90"
-                            aria-label="Adicionar ${product.name} ao carrinho">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                            </svg>
+                        <span class="text-xl font-black text-brandGreen font-poppins">R$ ${formatBRL(product.price)}</span>
+                        <button onclick="handleAddClick(${product.id})" class="w-12 h-12 bg-brandBg rounded-full flex items-center justify-center text-brandDark hover:bg-brandGreen hover:text-white transition-colors duration-300 shadow-sm active:scale-90">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
                         </button>
                     </div>
                 </div>
@@ -688,73 +625,231 @@
             container.appendChild(card);
         });
 
-        if (window.gsap) {
-            gsap.fromTo('#products-grid > div',
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: 'power2.out' }
-            );
-        }
+        if (window.gsap) gsap.fromTo('#products-grid > div', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: 'power2.out' });
     }
 
-    renderCategories();
-    renderProducts();
+    renderCategories(); renderProducts();
 
-    /* ─────────────────────────────────────────
-       TOASTS (SweetAlert2)
-    ───────────────────────────────────────── */
-    const modernToast = Swal.mixin({
-        toast: true,
-        position: 'bottom',
-        showConfirmButton: false,
-        timer: 2500,
-        timerProgressBar: true,
-        didOpen: toast => {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-        }
-    });
+    const modernToast = Swal.mixin({ toast: true, position: 'bottom', showConfirmButton: false, timer: 2500, timerProgressBar: true, didOpen: toast => { toast.addEventListener('mouseenter', Swal.stopTimer); toast.addEventListener('mouseleave', Swal.resumeTimer); } });
+    function showToast(message, type = 'success') { modernToast.fire({ icon: type, title: message, background: type === 'success' ? '#63336f' : '#ef4444', color: '#ffffff', iconColor: type === 'success' ? '#90b05c' : '#ffffff', customClass: { popup: 'rounded-2xl shadow-2xl border border-white/10' } }); }
 
-    function showToast(message, type = 'success') {
-        modernToast.fire({
-            icon: type,
-            title: message,
-            background: type === 'success' ? '#63336f' : '#ef4444',
-            color: '#ffffff',
-            iconColor: type === 'success' ? '#90b05c' : '#ffffff',
-            customClass: { popup: 'rounded-2xl shadow-2xl border border-white/10' }
-        });
-    }
-
-    /* ─────────────────────────────────────────
-       CUPOM
-    ───────────────────────────────────────── */
     let cupomAplicado = false;
-
     async function aplicarCupom() {
         await copyToClipboard('MESTRE10');
-
         if (!cupomAplicado) {
             cupomAplicado = true;
-            const alert = document.getElementById('cart-coupon-alert');
-            alert.classList.remove('hidden');
-            alert.classList.add('flex');
+            document.getElementById('cart-coupon-alert').classList.remove('hidden');
+            document.getElementById('cart-coupon-alert').classList.add('flex');
         }
-
-        confetti({
-            particleCount: 100, spread: 70, origin: { y: 0.6 },
-            colors: ['#0084ff', '#90b05c', '#63336f', '#f2eff0'],
-            zIndex: 10000
-        });
-
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#0084ff', '#90b05c', '#63336f', '#f2eff0'], zIndex: 10000 });
         showToast('Cupom MESTRE10 copiado e ativado!', 'success');
         atualizarCarrinhoDOM();
     }
 
     /* ─────────────────────────────────────────
+       LÓGICA DO MODAL DE COMPLEMENTOS
+    ───────────────────────────────────────── */
+    let currentCustomizingProduct = null;
+    let currentFreeSelections = [];
+    let currentPaidSelections = [];
+    let maxFreeCurrent = 3;
+
+    window.handleAddClick = function(productId) {
+        const product = PRODUCTS.find(p => p.id === productId);
+        if (!product) return;
+
+        // Se o produto for customizável, abre o modal. Senão, vai direto.
+        if (product.customizable) {
+            openAddonsModal(product);
+        } else {
+            const existing = cart.find(i => i.id === productId && !i.customizationString);
+            if (existing) existing.quantidade += 1;
+            else cart.push({ ...product, basePrice: product.price, finalUnitPrice: product.price, quantidade: 1, customizationString: null });
+            
+            showToast(`1x ${product.name} adicionado!`);
+            atualizarCarrinhoDOM();
+            if (window.gsap) gsap.fromTo('#cart-count', { scale: 1.5 }, { scale: 1, duration: 0.3, ease: 'back.out' });
+        }
+    };
+
+    function openAddonsModal(product) {
+        currentCustomizingProduct = product;
+        currentFreeSelections = [];
+        currentPaidSelections = new Array(ADDONS_PAID.length).fill(0);
+        maxFreeCurrent = product.maxFree || 3;
+
+        document.getElementById('addon-modal-title').innerText = product.name;
+        document.getElementById('addon-free-counter').innerText = `Escolha de 1 a ${maxFreeCurrent}`;
+        document.getElementById('addon-obs-input').value = '';
+
+        // Render Grátis
+        const freeSection = document.getElementById('addons-free-section');
+        const freeList = document.getElementById('addons-free-list');
+        freeList.innerHTML = '';
+        if (maxFreeCurrent > 0) {
+            freeSection.classList.remove('hidden');
+            ADDONS_FREE.forEach(opt => {
+                freeList.innerHTML += `
+                    <label class="flex items-center gap-3 p-3 bg-[#faf9fb] border border-brandSec1/20 rounded-xl cursor-pointer hover:border-brandGreen transition-all">
+                        <input type="checkbox" class="addon-cb hidden" value="${opt}" onchange="handleFreeChange(this)">
+                        <div class="w-5 h-5 flex items-center justify-center rounded border border-gray-300 bg-white transition-colors flex-shrink-0">
+                            <svg class="w-3.5 h-3.5 text-brandGreen opacity-0 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <span class="text-[13px] font-semibold text-brandDark truncate leading-tight">${opt}</span>
+                    </label>
+                `;
+            });
+        } else {
+            freeSection.classList.add('hidden');
+        }
+
+        // Render Pagos
+        const paidSection = document.getElementById('addons-paid-section');
+        const paidList = document.getElementById('addons-paid-list');
+        paidList.innerHTML = '';
+        paidSection.classList.remove('hidden');
+        ADDONS_PAID.forEach((addon, idx) => {
+            paidList.innerHTML += `
+                <div class="flex justify-between items-center py-3 border-b border-brandSec1/10 last:border-0">
+                    <div>
+                        <p class="text-[13px] font-bold text-brandDark">${addon.name}</p>
+                        <p class="text-xs text-brandGreen font-semibold">+ R$ ${formatBRL(addon.price)}</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="handlePaidChange(${idx}, -1)" class="w-8 h-8 rounded-full bg-brandBg text-brandDark font-bold hover:bg-red-100 hover:text-red-500 transition-colors flex items-center justify-center active:scale-90">−</button>
+                        <span id="paid-qty-${idx}" class="text-sm font-bold w-4 text-center">0</span>
+                        <button onclick="handlePaidChange(${idx}, 1)" class="w-8 h-8 rounded-full bg-brandBg text-brandDark font-bold hover:bg-brandGreen hover:text-white transition-colors flex items-center justify-center active:scale-90">+</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        updateModalTotal();
+
+        // Abre modal
+        const modal = document.getElementById('addons-modal');
+        const modalContent = document.getElementById('addons-modal-content');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modalContent.classList.remove('translate-y-full');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.closeAddonsModal = function() {
+        const modal = document.getElementById('addons-modal');
+        const modalContent = document.getElementById('addons-modal-content');
+        modal.classList.add('opacity-0');
+        modalContent.classList.add('translate-y-full');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            if(document.getElementById('cart-overlay').classList.contains('hidden')) {
+                document.body.style.overflow = '';
+            }
+        }, 300);
+    }
+
+    window.handleFreeChange = function(checkbox) {
+        if (checkbox.checked) {
+            if (currentFreeSelections.length >= maxFreeCurrent) {
+                checkbox.checked = false;
+                showToast(`Pode escolher no máximo ${maxFreeCurrent} itens grátis.`, 'error');
+                return;
+            }
+            currentFreeSelections.push(checkbox.value);
+        } else {
+            currentFreeSelections = currentFreeSelections.filter(v => v !== checkbox.value);
+        }
+    }
+
+    window.handlePaidChange = function(idx, delta) {
+        const maxPerItem = 10;
+        const totalPaidAllowed = 20;
+        
+        let currentTotal = currentPaidSelections.reduce((a, b) => a + b, 0);
+        
+        if (delta > 0) {
+            if (currentTotal >= totalPaidAllowed) return showToast(`Máximo de 20 extras atingido.`, 'error');
+            if (currentPaidSelections[idx] >= maxPerItem) return showToast(`Máximo de ${maxPerItem} p/ este item.`, 'error');
+        }
+        
+        if (delta < 0 && currentPaidSelections[idx] === 0) return;
+
+        currentPaidSelections[idx] += delta;
+        document.getElementById(`paid-qty-${idx}`).innerText = currentPaidSelections[idx];
+        updateModalTotal();
+    }
+
+    function updateModalTotal() {
+        let total = currentCustomizingProduct.price;
+        currentPaidSelections.forEach((qty, idx) => {
+            total += qty * ADDONS_PAID[idx].price;
+        });
+        document.getElementById('addon-total-price').innerText = `R$ ${formatBRL(total)}`;
+    }
+
+    window.confirmAddons = function() {
+        // Validação: obrigatório pelo menos 1 grátis se o produto permitir
+        if (maxFreeCurrent > 0 && currentFreeSelections.length === 0) {
+            return showToast('Selecione pelo menos 1 complemento grátis.', 'error');
+        }
+
+        let parts = [];
+        
+        if (currentFreeSelections.length > 0) {
+            parts.push(`*Grátis:* ${currentFreeSelections.join(', ')}`);
+        }
+
+        let paidTotal = 0;
+        let paidStrings = [];
+        currentPaidSelections.forEach((qty, idx) => {
+            if (qty > 0) {
+                const addon = ADDONS_PAID[idx];
+                paidTotal += qty * addon.price;
+                paidStrings.push(`${qty}x ${addon.name} (+R$ ${formatBRL(qty * addon.price)})`);
+            }
+        });
+
+        if (paidStrings.length > 0) {
+            parts.push(`*Extras:* ${paidStrings.join(', ')}`);
+        }
+
+        const obs = document.getElementById('addon-obs-input').value.trim();
+        if (obs) {
+            parts.push(`*Obs:* ${obs}`);
+        }
+
+        let customStr = parts.join(' | ');
+        let finalUnitPrice = currentCustomizingProduct.price + paidTotal;
+
+        // Procura se já tem no carrinho com a EXATA mesma configuração
+        const existing = cart.find(i => i.id === currentCustomizingProduct.id && i.customizationString === customStr);
+        if(existing) {
+            existing.quantidade += 1;
+        } else {
+            cart.push({ 
+                ...currentCustomizingProduct, 
+                basePrice: currentCustomizingProduct.price,
+                finalUnitPrice: finalUnitPrice,
+                quantidade: 1, 
+                customizationString: customStr 
+            });
+        }
+
+        closeAddonsModal();
+        showToast(`1x ${currentCustomizingProduct.name} adicionado!`);
+        atualizarCarrinhoDOM();
+        if (window.gsap) gsap.fromTo('#cart-count', { scale: 1.5 }, { scale: 1, duration: 0.3, ease: 'back.out' });
+        openCart();
+    }
+
+
+    /* ─────────────────────────────────────────
        CARRINHO E LÓGICA DE FORMULÁRIO DE ENTREGA
     ───────────────────────────────────────── */
     let cart = [];
-    let isDelivery = true; // Controle da Aba (Entrega ou Retirada)
+    let isDelivery = true; 
     const NUM_WHATSAPP = '553192316707';
 
     const cartSidebar      = document.getElementById('cart-sidebar');
@@ -766,7 +861,6 @@
     const mobileCartBar    = document.getElementById('mobile-cart-bar');
     const clearCartBtn     = document.getElementById('clear-cart-btn');
     
-    // Elementos do Form e Abas
     const tabDelivery      = document.getElementById('tab-delivery');
     const tabPickup        = document.getElementById('tab-pickup');
     const formDeliveryInfo = document.getElementById('form-delivery-info');
@@ -793,44 +887,28 @@
     document.getElementById('close-cart').addEventListener('click', closeCart);
     cartOverlay.addEventListener('click', closeCart);
 
-    // Eventos das Abas (Entrega/Retirada)
     tabDelivery.addEventListener('click', () => {
         isDelivery = true;
         tabDelivery.className = 'flex-1 py-2 text-sm font-bold bg-white text-brandGreen shadow rounded-md transition-all';
         tabPickup.className = 'flex-1 py-2 text-sm font-bold text-brandSec1 hover:text-brandDark transition-all';
-        formDeliveryInfo.classList.remove('hidden');
-        formDeliveryInfo.classList.add('flex');
+        formDeliveryInfo.classList.remove('hidden'); formDeliveryInfo.classList.add('flex');
     });
 
     tabPickup.addEventListener('click', () => {
         isDelivery = false;
         tabPickup.className = 'flex-1 py-2 text-sm font-bold bg-white text-brandGreen shadow rounded-md transition-all';
         tabDelivery.className = 'flex-1 py-2 text-sm font-bold text-brandSec1 hover:text-brandDark transition-all';
-        formDeliveryInfo.classList.add('hidden');
-        formDeliveryInfo.classList.remove('flex');
+        formDeliveryInfo.classList.add('hidden'); formDeliveryInfo.classList.remove('flex');
     });
 
-    // Função de Upsell (Gerar produtos para levar junto)
     function renderUpsell() {
         upsellItemsEl.innerHTML = '';
         const cartIds = cart.map(item => item.id);
-        
-        // Filtra opções interessantes (Bebidas ou Paletas) que NÃO estão no carrinho
-        const upsellCandidates = PRODUCTS.filter(p => 
-            !cartIds.includes(p.id) && 
-            (p.category === 'Bebidas' || p.category === 'Paletas Mexicanas')
-        );
+        const upsellCandidates = PRODUCTS.filter(p => !cartIds.includes(p.id) && (p.category === 'Bebidas' || p.category === 'Paletas Mexicanas'));
 
-        if(upsellCandidates.length === 0) {
-            cartUpsell.classList.add('hidden');
-            cartUpsell.classList.remove('flex');
-            return;
-        }
+        if(upsellCandidates.length === 0) { cartUpsell.classList.add('hidden'); cartUpsell.classList.remove('flex'); return; }
 
-        cartUpsell.classList.remove('hidden');
-        cartUpsell.classList.add('flex');
-
-        // Escolhe 3 aleatórios
+        cartUpsell.classList.remove('hidden'); cartUpsell.classList.add('flex');
         const selectedUpsells = upsellCandidates.sort(() => 0.5 - Math.random()).slice(0, 3);
 
         selectedUpsells.forEach(p => {
@@ -844,7 +922,7 @@
                     <p class="text-[11px] font-bold leading-tight text-brandDark line-clamp-2">${p.name}</p>
                     <div class="flex items-center justify-between mt-2">
                         <span class="text-xs font-black text-brandGreen">R$ ${formatBRL(p.price)}</span>
-                        <button onclick="adicionarAoCarrinho(${p.id})" aria-label="Adicionar ${p.name}" class="w-7 h-7 bg-brandBg rounded-full flex items-center justify-center text-brandDark hover:bg-brandGreen hover:text-white transition-colors">
+                        <button onclick="handleAddClick(${p.id})" aria-label="Adicionar ${p.name}" class="w-7 h-7 bg-brandBg rounded-full flex items-center justify-center text-brandDark hover:bg-brandGreen hover:text-white transition-colors">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
                         </button>
                     </div>
@@ -853,23 +931,6 @@
             upsellItemsEl.appendChild(card);
         });
     }
-
-    window.adicionarAoCarrinho = function(productId) {
-        const product = PRODUCTS.find(p => p.id === productId);
-        if (!product) return;
-
-        const existing = cart.find(i => i.id === productId);
-        if (existing) {
-            existing.quantidade += 1;
-        } else {
-            cart.push({ ...product, quantidade: 1 });
-        }
-
-        showToast(`1x ${product.name} adicionado!`);
-        atualizarCarrinhoDOM();
-
-        if (window.gsap) gsap.fromTo('#cart-count', { scale: 1.5 }, { scale: 1, duration: 0.3, ease: 'back.out' });
-    };
 
     window.alterarQuantidade = function(index, delta) {
         cart[index].quantidade += delta;
@@ -881,27 +942,15 @@
         if (cart.length === 0) return;
         
         Swal.fire({
-            title: 'Esvaziar sacola?',
-            text: "Deseja remover todos os itens do seu pedido?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#ef4444',
-            cancelButtonColor: '#8b7193',
-            confirmButtonText: 'Sim, esvaziar',
-            cancelButtonText: 'Cancelar',
-            customClass: { popup: 'rounded-2xl border border-white/10' }
+            title: 'Esvaziar sacola?', text: "Deseja remover todos os itens do seu pedido?", icon: 'warning',
+            showCancelButton: true, confirmButtonColor: '#ef4444', cancelButtonColor: '#8b7193',
+            confirmButtonText: 'Sim, esvaziar', cancelButtonText: 'Cancelar', customClass: { popup: 'rounded-2xl border border-white/10' }
         }).then((result) => {
             if (result.isConfirmed) {
-                cart = [];
-                cupomAplicado = false; // Reseta o estado do cupom
-                
+                cart = []; cupomAplicado = false;
                 const alert = document.getElementById('cart-coupon-alert');
-                alert.classList.add('hidden');
-                alert.classList.remove('flex');
-
-                atualizarCarrinhoDOM();
-                showToast('Sacola esvaziada!', 'success');
-                // Fecha a barra lateral suavemente após esvaziar
+                alert.classList.add('hidden'); alert.classList.remove('flex');
+                atualizarCarrinhoDOM(); showToast('Sacola esvaziada!', 'success');
                 setTimeout(() => closeCart(), 400);
             }
         });
@@ -914,25 +963,30 @@
 
         if (cart.length === 0) {
             emptyCartMsg.classList.remove('hidden');   
-            cartContentWrap.classList.add('hidden');
-            cartContentWrap.classList.remove('flex');
+            cartContentWrap.classList.add('hidden'); cartContentWrap.classList.remove('flex');
             checkoutBtn.disabled = true;
             mobileCartBar.classList.add('translate-y-full');
             if (clearCartBtn) clearCartBtn.classList.add('hidden');
         } else {
             emptyCartMsg.classList.add('hidden');       
-            cartContentWrap.classList.remove('hidden');
-            cartContentWrap.classList.add('flex');
+            cartContentWrap.classList.remove('hidden'); cartContentWrap.classList.add('flex');
             checkoutBtn.disabled = false;
             mobileCartBar.classList.remove('translate-y-full');
             if (clearCartBtn) clearCartBtn.classList.remove('hidden');
 
-            // Renderiza Upsell novo sempre que o carrinho mudar
             renderUpsell();
 
             cart.forEach((item, index) => {
-                subtotal += item.price * item.quantidade;
+                let currentItemPrice = item.finalUnitPrice || item.price;
+                subtotal += currentItemPrice * item.quantidade;
                 qtdItens += item.quantidade;
+
+                let detailsHTML = '';
+                if (item.customizationString) {
+                    // Substitui " | " por <br> e tira os asteriscos para renderizar bonito no HTML
+                    let textClean = item.customizationString.replace(/\*/g, '').replace(/ \| /g, '<br>');
+                    detailsHTML = `<p class="text-[10px] text-brandSec1 leading-tight mt-1 opacity-90">${textClean}</p>`;
+                }
 
                 const div = document.createElement('div');
                 div.setAttribute('role', 'listitem');
@@ -940,23 +994,19 @@
                 div.innerHTML = `
                     <div class="flex-1 pr-2">
                         <h5 class="text-brandDark font-bold text-[13px] leading-tight">${item.name}</h5>
-                        <p class="text-brandSec1 font-semibold text-xs mt-1">R$ ${formatBRL(item.price * item.quantidade)}</p>
+                        ${detailsHTML}
+                        <p class="text-brandGreen font-bold text-xs mt-1">R$ ${formatBRL(currentItemPrice * item.quantidade)}</p>
                     </div>
-                    <div class="flex items-center gap-2 bg-brandBg p-1.5 rounded-lg border border-gray-200" role="group" aria-label="Quantidade de ${item.name}">
-                        <button onclick="alterarQuantidade(${index}, -1)"
-                            class="w-8 h-8 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-red-500 font-bold active:scale-90 transition-all"
-                            aria-label="Remover 1 de ${item.name}">−</button>
-                        <span class="text-sm font-bold w-4 text-center" aria-live="polite">${item.quantidade}</span>
-                        <button onclick="alterarQuantidade(${index}, 1)"
-                            class="w-8 h-8 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-brandGreen font-bold active:scale-90 transition-all"
-                            aria-label="Adicionar 1 de ${item.name}">+</button>
+                    <div class="flex items-center gap-2 bg-brandBg p-1.5 rounded-lg border border-gray-200 shrink-0">
+                        <button onclick="alterarQuantidade(${index}, -1)" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-red-500 font-bold active:scale-90 transition-all">−</button>
+                        <span class="text-xs sm:text-sm font-bold w-4 text-center">${item.quantidade}</span>
+                        <button onclick="alterarQuantidade(${index}, 1)" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-white rounded shadow-sm text-brandDark hover:text-brandGreen font-bold active:scale-90 transition-all">+</button>
                     </div>
                 `;
                 cartItemsEl.appendChild(div);
             });
         }
 
-        // Totais
         document.getElementById('cart-subtotal').textContent = `R$ ${formatBRL(subtotal)}`;
 
         let desconto = 0;
@@ -966,33 +1016,22 @@
         if (cupomAplicado) {
             if (subtotal >= 23) {
                 desconto = subtotal * 0.10;
-                discountRow.classList.remove('hidden');
-                discountRow.classList.add('flex');
-                warningRow.classList.add('hidden');
+                discountRow.classList.remove('hidden'); discountRow.classList.add('flex'); warningRow.classList.add('hidden');
             } else {
-                discountRow.classList.add('hidden');
-                discountRow.classList.remove('flex');
+                discountRow.classList.add('hidden'); discountRow.classList.remove('flex');
                 if (subtotal > 0) {
-                    warningRow.classList.remove('hidden');
-                    document.getElementById('val-falta').textContent = formatBRL(23 - subtotal);
-                } else {
-                    warningRow.classList.add('hidden');
-                }
+                    warningRow.classList.remove('hidden'); document.getElementById('val-falta').textContent = formatBRL(23 - subtotal);
+                } else { warningRow.classList.add('hidden'); }
             }
         } else {
-            discountRow.classList.add('hidden');
-            discountRow.classList.remove('flex');
-            warningRow.classList.add('hidden');
+            discountRow.classList.add('hidden'); discountRow.classList.remove('flex'); warningRow.classList.add('hidden');
         }
 
         document.getElementById('cart-discount-val').textContent = `- R$ ${formatBRL(desconto)}`;
-
         const total = subtotal - desconto;
         const totalStr = `R$ ${formatBRL(total)}`;
-        document.getElementById('cart-total').textContent         = totalStr;
-        document.getElementById('mobile-cart-total').textContent  = totalStr;
-        document.getElementById('cart-count').textContent         = qtdItens;
-        document.getElementById('mobile-cart-badge').textContent  = qtdItens;
+        document.getElementById('cart-total').textContent = totalStr; document.getElementById('mobile-cart-total').textContent = totalStr;
+        document.getElementById('cart-count').textContent = qtdItens; document.getElementById('mobile-cart-badge').textContent = qtdItens;
     }
 
     /* ─────────────────────────────────────────
@@ -1001,7 +1040,6 @@
     checkoutBtn.addEventListener('click', () => {
         if (cart.length === 0) return;
 
-        // Validação de Campos
         const custName = document.getElementById('cust-name').value.trim();
         if(!custName) return showToast('Por favor, informe seu Nome Completo', 'error');
 
@@ -1020,33 +1058,31 @@
 
         const payment = document.getElementById('cust-payment').value;
 
-        // Montagem da Mensagem
         let subtotal = 0;
-        const linhas = [
-            `Olá! Me chamo ${custName} e gostaria de fazer o seguinte pedido:`, 
-            ''
-        ];
+        const linhas = [`Olá! Me chamo ${custName} e gostaria de fazer o seguinte pedido:`, ''];
 
         cart.forEach(item => {
-            const val = item.price * item.quantidade;
+            let currentItemPrice = item.finalUnitPrice || item.price;
+            const val = currentItemPrice * item.quantidade;
             subtotal += val;
             linhas.push(`▪️ ${item.quantidade}x ${item.name} — R$ ${formatBRL(val)}`);
+            
+            if (item.customizationString) {
+                let customLines = item.customizationString.split(' | ').map(c => `   ↳ ${c}`);
+                linhas.push(...customLines);
+            }
         });
 
         linhas.push('', `*Subtotal:* R$ ${formatBRL(subtotal)}`);
 
         let total = subtotal;
         if (cupomAplicado && subtotal >= 23) {
-            const d = subtotal * 0.10;
-            total -= d;
+            const d = subtotal * 0.10; total -= d;
             linhas.push(`🏷️ *Desconto (MESTRE10):* — R$ ${formatBRL(d)}`);
         }
 
         linhas.push(
-            `*TOTAL A PAGAR:* R$ ${formatBRL(total)}`,
-            '',
-            addressText,
-            '',
+            `*TOTAL A PAGAR:* R$ ${formatBRL(total)}`, '', addressText, '',
             `💳 *Forma de Pagamento:* ${payment}`,
             payment === 'PIX' ? '\nChave (CNPJ): 57.988.054/0001-24\nNome: Mestre do Açaí Barreiro LTDA' : ''
         );
@@ -1058,16 +1094,8 @@
     /* ─────────────────────────────────────────
        ANIMAÇÕES (GSAP)
     ───────────────────────────────────────── */
-    window.addEventListener('load', () => {
-        if (window.gsap) {
-            gsap.from('.hero-anim', { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out', delay: 0.1 });
-        }
-    });
-
-    window.addEventListener('scroll', () => {
-        const nav = document.getElementById('navbar');
-        nav.classList.toggle('shadow-md', window.scrollY > 10);
-    });
+    window.addEventListener('load', () => { if (window.gsap) gsap.from('.hero-anim', { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out', delay: 0.1 }); });
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('shadow-md', window.scrollY > 10); });
     </script>
 </body>
 </html>
