@@ -11,17 +11,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
     <meta name="theme-color" content="#63336f">
 
-    <!-- Open Graph / Compartilhamento em redes sociais -->
+    <!-- Open Graph -->
     <meta property="og:type"        content="website">
     <meta property="og:title"       content="Mestre do Açaí Delivery | Cardápio Digital">
     <meta property="og:description" content="O melhor açaí da região. Eleito Super Restaurante com mais de 100 mil açaís vendidos. Peça agora!">
     <meta property="og:image"       content="logo.png">
     <meta property="og:locale"      content="pt_BR">
-    <meta name="twitter:card"        content="summary_large_image">
-    <meta name="twitter:title"       content="Mestre do Açaí Delivery">
-    <meta name="twitter:description" content="O melhor açaí da região. Peça agora!">
 
-    <!-- Google Fonts: Poppins (Títulos) e Inter (Textos) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
@@ -44,12 +40,8 @@
                         poppins: ['Poppins', 'sans-serif'],
                         inter:   ['Inter',   'sans-serif'],
                     },
-                    keyframes: {
-                        shimmer: { '100%': { transform: 'translateX(400%)' } }
-                    },
-                    animation: {
-                        shimmer: 'shimmer 1.5s infinite'
-                    }
+                    keyframes: { shimmer: { '100%': { transform: 'translateX(400%)' } } },
+                    animation: { shimmer: 'shimmer 1.5s infinite' }
                 }
             }
         }
@@ -72,14 +64,13 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Scroll horizontal das categorias - UX ajustada */
+        /* UX: Rolagem horizontal suave */
         .category-scroll {
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             scroll-padding-inline-start: 1rem;
         }
 
-        /* SweetAlert z-index */
         .swal2-container { z-index: 9999 !important; }
     </style>
 </head>
@@ -114,7 +105,7 @@
                     <!-- Buscar -->
                     <button onclick="focusSearch()" aria-label="Buscar no cardápio"
                         class="h-11 w-11 sm:h-12 sm:w-12 bg-[#ebdff0] hover:bg-[#dfcce6] rounded-full flex items-center justify-center text-[#9a4dcf] transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </button>
@@ -122,7 +113,7 @@
                     <!-- Compartilhar -->
                     <button onclick="compartilharLoja()" aria-label="Compartilhar cardápio"
                         class="h-11 w-11 sm:h-12 sm:w-12 bg-[#ebdff0] hover:bg-[#dfcce6] rounded-full flex items-center justify-center text-[#9a4dcf] transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
                         </svg>
                     </button>
@@ -130,10 +121,10 @@
                     <!-- Carrinho -->
                     <button id="cart-toggle" aria-label="Abrir carrinho"
                         class="relative ml-1 bg-white text-brandDark hover:text-brandGreen hover:bg-gray-50 transition-all rounded-full shadow-sm border border-brandSec1/10 flex items-center justify-center h-11 w-11 sm:h-12 sm:w-12">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                         </svg>
-                        <span id="cart-count" class="absolute -top-1 -right-1 flex items-center justify-center w-[22px] h-[22px] text-[11px] font-bold text-white bg-brandGreen rounded-full border-2 border-brandBg">0</span>
+                        <span id="cart-count" class="absolute -top-1 -right-1 flex items-center justify-center w-[22px] h-[22px] text-[11px] font-bold text-white bg-brandGreen rounded-full border-2 border-brandBg shadow-sm">0</span>
                     </button>
                 </div>
             </div>
@@ -169,7 +160,7 @@
             <div class="hero-anim w-full max-w-md mx-auto mb-6">
                 <button onclick="aplicarCupom()"
                     class="w-full relative overflow-hidden bg-gradient-to-r from-[#007bf5] to-[#00aaff] rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-left group"
-                    aria-label="Copiar cupom MESTRE10 de 10% de desconto">
+                    aria-label="Copiar cupom MESTRE10">
                     <div class="absolute inset-0 w-1/4 h-full bg-white/20 skew-x-12 -translate-x-full group-hover:animate-shimmer pointer-events-none"></div>
                     <div class="flex items-center p-4 sm:p-5 h-full">
                         <div class="bg-yellow-400 p-3 rounded-xl flex-shrink-0 mr-3 sm:mr-4 shadow-inner" aria-hidden="true">
@@ -213,6 +204,7 @@
             <!-- Barra de Busca -->
             <div class="max-w-xl mx-auto mb-8 relative section-title-anim">
                 <label for="search-input" class="sr-only">Buscar produtos</label>
+                <!-- O font-medium text-base (16px) é crucial para o iOS não dar zoom sozinho na tela -->
                 <input type="search" id="search-input" placeholder="Buscar por açaí, cremes..."
                     class="w-full pl-12 pr-10 py-4 rounded-2xl bg-brandBg border-2 border-transparent focus:outline-none focus:border-brandGreen focus:bg-white transition-all text-brandDark shadow-sm font-medium text-base"
                     autocomplete="off" autocorrect="off" spellcheck="false">
@@ -227,10 +219,10 @@
                 </button>
             </div>
 
-            <!-- Categorias (UX Ajustada: Edge-to-Edge Scroll para Mobile) -->
-            <div class="relative mb-10 -mx-4 sm:mx-0" id="category-container">
+            <!-- Categorias (Edge-to-edge scroll para evitar cortes visuais em mobile) -->
+            <div class="relative mb-10" id="category-container">
                 <div id="category-tabs" role="tablist" aria-label="Categorias do cardápio"
-                    class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-4 snap-x items-center">
+                    class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-4 sm:px-0 snap-x border-b border-brandBg items-center -mx-4 sm:mx-0">
                     <!-- Renderizado via JS -->
                 </div>
             </div>
@@ -301,18 +293,16 @@
                                 🏷️ Cupom MESTRE10
                             </button>
                         </li>
-                        <li>
-                            <a href="https://www.instagram.com/mestredoacai1/" target="_blank" rel="noopener noreferrer"
-                               class="text-brandBg hover:text-brandGreen transition-colors flex items-center gap-2">
-                                📸 Instagram
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="pt-6 border-t border-brandSec2/40 text-center">
-                <p class="text-xs text-brandSec1">&copy; 2024 Mestre do Açaí. Todos os direitos reservados.</p>
+            <!-- WPP Discreto e Direitos Autorais (2026) -->
+            <div class="pt-6 border-t border-brandSec2/40 text-center flex flex-col items-center gap-1.5">
+                <p class="text-xs text-brandSec1">&copy; 2026 Mestre do Açaí. Todos os direitos reservados.</p>
+                <a href="https://wa.me/553192316707" target="_blank" rel="noopener noreferrer" class="text-[10px] text-brandSec1/60 hover:text-brandGreen transition-colors opacity-80">
+                    WhatsApp: (31) 9231-6707
+                </a>
             </div>
         </div>
     </footer>
@@ -343,12 +333,22 @@
                 </svg>
                 O Seu Pedido
             </h3>
-            <button id="close-cart" aria-label="Fechar carrinho"
-                class="text-brandSec1 hover:text-white bg-white/10 p-2 rounded-full transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
+            
+            <div class="flex items-center gap-2">
+                <!-- Botão Lixeira (Apenas visível com itens) -->
+                <button id="clear-cart-btn" onclick="limparCarrinho()" aria-label="Esvaziar carrinho" title="Esvaziar carrinho"
+                    class="hidden text-red-400 hover:text-white bg-white/5 hover:bg-red-500 p-2 rounded-full transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                </button>
+                <button id="close-cart" aria-label="Fechar carrinho"
+                    class="text-brandSec1 hover:text-white bg-white/10 p-2 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <!-- Alerta Cupom -->
@@ -387,15 +387,16 @@
                     <!-- Injetado via JS -->
                 </div>
 
-                <!-- Nova Seção de Upsell -->
+                <!-- Seção de Upsell (Sugestões) -->
                 <div id="cart-upsell" class="bg-brandBg/80 p-4 rounded-xl border border-brandSec1/10 shadow-sm hidden flex-col">
                     <h6 class="text-sm font-bold text-brandDark mb-3">Combina perfeitamente. Leve junto! 👇</h6>
+                    <!-- Scroll edge to edge (largura do card cortada induz ao scroll) -->
                     <div class="flex overflow-x-auto category-scroll snap-x gap-3 pb-2 no-scrollbar after:content-[''] after:w-2 after:shrink-0" id="upsell-items">
                         <!-- Injetado via JS -->
                     </div>
                 </div>
 
-                <!-- Novo Formulário de Entrega/Retirada -->
+                <!-- Formulário de Entrega/Retirada -->
                 <div class="bg-white p-4 rounded-xl border border-brandSec1/20 shadow-sm flex flex-col gap-4">
                     <h6 class="text-sm font-bold text-brandDark">Opção de Recebimento</h6>
                     
@@ -635,11 +636,9 @@
             };
             container.appendChild(btn);
         });
-
-        // FIX DEFINITIVO: Elemento físico invisível no final do scroll
-        // Força o navegador a renderizar espaço extra para a última categoria não cortar
-        const spacer = document.createElement('div');
-        spacer.className = "w-4 shrink-0 pointer-events-none md:hidden";
+        
+        // Espaçador crítico UX Mobile
+        const spacer = Object.assign(document.createElement('div'), { className: 'shrink-0 w-8 h-1 md:hidden' });
         container.appendChild(spacer);
     }
 
@@ -765,6 +764,7 @@
     const cartContentWrap  = document.getElementById('cart-content-wrapper');
     const checkoutBtn      = document.getElementById('checkout-btn');
     const mobileCartBar    = document.getElementById('mobile-cart-bar');
+    const clearCartBtn     = document.getElementById('clear-cart-btn');
     
     // Elementos do Form e Abas
     const tabDelivery      = document.getElementById('tab-delivery');
@@ -877,6 +877,36 @@
         atualizarCarrinhoDOM();
     };
 
+    window.limparCarrinho = function() {
+        if (cart.length === 0) return;
+        
+        Swal.fire({
+            title: 'Esvaziar sacola?',
+            text: "Deseja remover todos os itens do seu pedido?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#8b7193',
+            confirmButtonText: 'Sim, esvaziar',
+            cancelButtonText: 'Cancelar',
+            customClass: { popup: 'rounded-2xl border border-white/10' }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                cart = [];
+                cupomAplicado = false; // Reseta o estado do cupom
+                
+                const alert = document.getElementById('cart-coupon-alert');
+                alert.classList.add('hidden');
+                alert.classList.remove('flex');
+
+                atualizarCarrinhoDOM();
+                showToast('Sacola esvaziada!', 'success');
+                // Fecha a barra lateral suavemente após esvaziar
+                setTimeout(() => closeCart(), 400);
+            }
+        });
+    };
+
     function atualizarCarrinhoDOM() {
         cartItemsEl.innerHTML = '';
         let subtotal = 0;
@@ -888,12 +918,14 @@
             cartContentWrap.classList.remove('flex');
             checkoutBtn.disabled = true;
             mobileCartBar.classList.add('translate-y-full');
+            if (clearCartBtn) clearCartBtn.classList.add('hidden');
         } else {
             emptyCartMsg.classList.add('hidden');       
             cartContentWrap.classList.remove('hidden');
             cartContentWrap.classList.add('flex');
             checkoutBtn.disabled = false;
             mobileCartBar.classList.remove('translate-y-full');
+            if (clearCartBtn) clearCartBtn.classList.remove('hidden');
 
             // Renderiza Upsell novo sempre que o carrinho mudar
             renderUpsell();
