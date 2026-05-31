@@ -1035,7 +1035,7 @@
     }
 
     /* ─────────────────────────────────────────
-       CHECKOUT COM VALIDAÇÕES
+       CHECKOUT COM VALIDAÇÕES E WEBHOOK
     ───────────────────────────────────────── */
     checkoutBtn.addEventListener('click', () => {
         if (cart.length === 0) return;
@@ -1044,12 +1044,12 @@
         if(!custName) return showToast('Por favor, informe seu Nome Completo', 'error');
 
         let addressText = '';
-        if(isDelivery) {
-            const rua = document.getElementById('cust-street').value.trim();
-            const numero = document.getElementById('cust-number').value.trim();
-            const bairro = document.getElementById('cust-neighborhood').value.trim();
-            const comp = document.getElementById('cust-complement').value.trim();
+        const rua = isDelivery ? document.getElementById('cust-street').value.trim() : '';
+        const numero = isDelivery ? document.getElementById('cust-number').value.trim() : '';
+        const bairro = isDelivery ? document.getElementById('cust-neighborhood').value.trim() : '';
+        const comp = isDelivery ? document.getElementById('cust-complement').value.trim() : '';
 
+        if(isDelivery) {
             if(!rua || !numero || !bairro) return showToast('Preencha Rua, Número e Bairro', 'error');
             addressText = `*🛵 Entrega em Casa*\nRua: ${rua}, ${numero}\nBairro: ${bairro}${comp ? `\nComplemento/Ref: ${comp}` : ''}`;
         } else {
@@ -1076,9 +1076,10 @@
         linhas.push('', `*Subtotal:* R$ ${formatBRL(subtotal)}`);
 
         let total = subtotal;
+        let desconto = 0;
         if (cupomAplicado && subtotal >= 23) {
-            const d = subtotal * 0.10; total -= d;
-            linhas.push(`🏷️ *Desconto (MESTRE10):* — R$ ${formatBRL(d)}`);
+            desconto = subtotal * 0.10; total -= desconto;
+            linhas.push(`🏷️ *Desconto (MESTRE10):* — R$ ${formatBRL(desconto)}`);
         }
 
         linhas.push(
@@ -1087,6 +1088,38 @@
             payment === 'PIX' ? '\nChave (CNPJ): 57.988.054/0001-24\nNome: Mestre do Açaí Barreiro LTDA' : ''
         );
 
+        // PREPARAR DADOS PARA O WEBHOOK (PLANILHA)
+        const webhookData = {
+            data_hora: new Date().toLocaleString('pt-BR'),
+            cliente: custName,
+            tipo_entrega: isDelivery ? 'Entrega' : 'Retirada',
+            endereco: isDelivery ? `${rua}, ${numero} - ${bairro} ${comp ? `(${comp})` : ''}` : '-',
+            pagamento: payment,
+            cupom: cupomAplicado && subtotal >= 23 ? 'MESTRE10' : '-',
+            subtotal: subtotal,
+            desconto: desconto,
+            total: total,
+            itens_resumo: cart.map(item => `${item.quantidade}x ${item.name}`).join(', '),
+            itens_detalhados: cart.map(item => {
+                let det = `${item.quantidade}x ${item.name} (R$ ${formatBRL(item.finalUnitPrice || item.price)})`;
+                if(item.customizationString) det += `\n   -> ${item.customizationString}`;
+                return det;
+            }).join('\n\n')
+        };
+
+        // DISPARAR WEBHOOK (Substitua a URL abaixo pela URL gerada no Google Apps Script)
+        const WEBHOOK_URL = ""; 
+        
+        if (WEBHOOK_URL) {
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Evita erro de CORS
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(webhookData)
+            }).catch(err => console.error("Erro no Webhook:", err));
+        }
+
+        // Abrir WhatsApp
         const url = `https://wa.me/${NUM_WHATSAPP}?text=${encodeURIComponent(linhas.join('\n'))}`;
         window.open(url, '_blank', 'noopener,noreferrer');
     });
