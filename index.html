@@ -227,10 +227,10 @@
                 </button>
             </div>
 
-            <!-- Categorias (Ajustado para evitar cortes - Gradients Removidos) -->
-            <div class="relative mb-10" id="category-container">
+            <!-- Categorias (UX Ajustada: Edge-to-Edge Scroll para Mobile) -->
+            <div class="relative mb-10 -mx-4 sm:mx-0" id="category-container">
                 <div id="category-tabs" role="tablist" aria-label="Categorias do cardápio"
-                    class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-4 snap-x border-b border-brandBg items-center after:content-[''] after:w-10 after:shrink-0">
+                    class="flex overflow-x-auto category-scroll no-scrollbar py-2 gap-3 pb-4 px-4 snap-x items-center">
                     <!-- Renderizado via JS -->
                 </div>
             </div>
@@ -635,6 +635,12 @@
             };
             container.appendChild(btn);
         });
+
+        // FIX DEFINITIVO: Elemento físico invisível no final do scroll
+        // Força o navegador a renderizar espaço extra para a última categoria não cortar
+        const spacer = document.createElement('div');
+        spacer.className = "w-4 shrink-0 pointer-events-none md:hidden";
+        container.appendChild(spacer);
     }
 
     function renderProducts() {
